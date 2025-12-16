@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 16, 2025 lúc 11:51 AM
+-- Thời gian đã tạo: Th12 16, 2025 lúc 01:17 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -41,6 +41,30 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`id_food`, `food_name`, `price`, `image`, `type`) VALUES
 ('ST_01', 'Sinh Tố Dâu', 15000, 'images/sinhtodau.jpg', 'Sinh tố');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `user`
+--
+
+CREATE TABLE `user` (
+  `ID` varchar(20) NOT NULL,
+  `password` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `Sex` varchar(3) NOT NULL,
+  `Date of birth` date NOT NULL,
+  `Address` varchar(50) NOT NULL,
+  `Position` varchar(20) NOT NULL,
+  `Role` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `user`
+--
+
+INSERT INTO `user` (`ID`, `password`, `name`, `Sex`, `Date of birth`, `Address`, `Position`, `Role`) VALUES
+('NV001', '123456', 'Nguyễn Trọng Nguyễn', 'Nam', '0000-00-00', 'Tp.HCM', 'Nhân Viên', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
