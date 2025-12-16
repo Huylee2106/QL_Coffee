@@ -1,0 +1,49 @@
+<?php
+$cartJson = $_POST['cart'] ?? '[]';
+$cart = json_decode($cartJson, true); // chuyển từ JSON string sang array
+
+$total = $_POST['total'] ?? 0;
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thanh toán</title>
+  <link rel="stylesheet" href="ThanhToan.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Thanh Toán</h2>
+
+    <form method="POST" action="xu_ly_thanh_toan.php">
+      <h3>Thông tin khách hàng</h3>
+      <label>Họ và tên</label>
+      <input name="ten" type="text" required />
+
+      <label>Số điện thoại</label>
+      <input name="sdt" type="text" required />
+
+      <h3>Phương thức thanh toán</h3>
+      
+      <input type="radio" name="payment_method" value="Tiền mặt" checked/> Tiền mặt<br />  
+      <input type="radio" name="payment_method" value="Chuyển khoản" /> Chuyển khoản<br />
+
+      <h3>Đơn hàng của bạn</h3>
+      <div class="summary-box">
+        <?php if(!empty($cart)){ foreach($cart as $item){ ?>
+          <p><?php echo $item['ten']; ?> x <?php echo $item['quantity']; ?> — <strong><?php echo number_format($item['gia'] * $item['quantity']); ?>đ</strong></p>
+        <?php }} ?>
+        <hr>
+        <p>Tổng cộng: <strong><?php echo number_format($total); ?>đ</strong></p>
+      </div>
+
+      <input type="hidden" name="json_cart" value='<?php echo json_encode($cart); ?>'>
+      <input type="hidden" name="tong_tien" value='<?php echo $total; ?>'>
+
+      <button class="btn">Hoàn tất thanh toán</button>
+    </form>
+  </div>
+</body>
+</html>
