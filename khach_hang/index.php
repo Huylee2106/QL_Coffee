@@ -36,22 +36,22 @@
           die("Kết nối thất bại: " . $conn->connect_error);
         }
 
-        $sql = "SELECT id, images, ten, gia, loai FROM water";
+        $sql = "SELECT id_food, image, food_name, price, `type` FROM menu";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {
-            echo "<div class='item' data-loai='" . $row['loai'] . "'>";
-            echo "<img src='" . $row['images'] . "' alt='" . $row['ten'] . "'>";
-            echo "<h3>" . $row['ten'] . "</h3>";
-            echo "<p id='gia'>Giá: " . number_format($row['gia']) . " VND</p>";
+            echo "<div class='item' data-loai='" . $row['type'] . "'>";
+            echo "<img src='" . $row['image'] . "' alt='" . $row['food_name'] . "'>";
+            echo "<h3>" . $row['food_name'] . "</h3>";
+            echo "<p id='gia'>Giá: " . number_format($row['price']) . " VND</p>";
             
             // *** THAY ĐỔI 2: Thêm class và data attributes cho nút
             echo "<button class='add-to-cart' 
-                      data-id='" . $row['id'] . "' 
-                      data-ten='" . htmlspecialchars($row['ten'], ENT_QUOTES) . "' 
-                      data-gia='" . $row['gia'] . "' 
-                      data-img='" . $row['images'] . "'>+</button>";
+                      data-id='" . $row['id_food'] . "' 
+                      data-ten='" . htmlspecialchars($row['food_name'], ENT_QUOTES) . "' 
+                      data-gia='" . $row['price'] . "' 
+                      data-img='" . $row['image'] . "'>+</button>";
                       
             echo "</div>";
           }
