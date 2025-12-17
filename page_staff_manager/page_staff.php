@@ -22,6 +22,12 @@
             <li onclick="showPage('view-inventory', this)">
                 📦 Xem kho
             </li>
+            <li onclick="showPage('view-dish', this)">
+                ➕ Thêm món
+            </li>
+            <li onclick="showPage('view-recipe', this)">
+                ➕ Thêm công thức
+            </li>
         </ul>
     </aside>
 
@@ -44,6 +50,18 @@
         <section id="view-inventory" class="page">
             <h1>Xem kho</h1>
             <div class="box">Tình trạng kho</div>
+        </section>
+
+        <!-- THÊM MÓN -->
+        <section id="view-dish" class="page">
+            <h1>Thêm món</h1>
+            <div class="box">Thêm món mới</div>
+        </section>
+
+        <!-- THÊM CÔNG THỨC -->
+        <section id="view-recipe" class="page">
+            <h1>Thêm món</h1>
+            <div class="box">Thêm công thức cho món</div>
         </section>
 
     </main>
