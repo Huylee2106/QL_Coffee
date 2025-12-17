@@ -3,7 +3,7 @@ require '../config/config.php';
 session_start();
 
 if (isset($_POST['submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['user']);
+    $username = mysqli_real_escape_string($conn, $_POST['id']);
     $password = $_POST['password'];
 
     $sql = "SELECT u.ID, u.user_name, u.password, u.role,

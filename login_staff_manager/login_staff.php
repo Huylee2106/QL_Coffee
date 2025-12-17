@@ -1,3 +1,6 @@
+<?php
+    require '../config/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,17 +11,17 @@
     </head>
     <body>
         <h1>Login</h1>
-        
-        <div class="login">
+        <form action="../config/dang_nhap_NV.php" method="POST">
+            <div class="login">
             
         <h3><span class="choose active"><a href="../login_staff_manager/login_staff.php">Staff</a></span> | <span class="chosse"><a href="../login_staff_manager/login_manager.php">Manager</a></span></h3>
 
             <div class="input">
-                <input type="text" class="name" id="user" placeholder="username" required>
+                <input type="text" class="name" id="id" name="id"placeholder="ID" required>
             </div>
 
             <div class="input">
-                <input type="password" class="password" id="password" placeholder="password" required>
+                <input type="password" class="password" id="password" placeholder="password" name="password"required>
             </div>
 
             <div class="remember-forget">
@@ -27,6 +30,8 @@
             </div>
 
             <button type="submit" class="btn" name="submit">Login</button>
-        </div>
+            </div>
+        </form> 
+        
     </body>
 </html>

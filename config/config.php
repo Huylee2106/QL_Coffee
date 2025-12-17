@@ -2,7 +2,7 @@
     $servername ="localhost";
     $username ="root";
     $password ="";
-    $db_name= "login_ck";
+    $db_name= "ql_caffe";
     $conn= new mysqli($servername, $username, $password , $db_name , 3306);
 
     if($conn->connect_error){

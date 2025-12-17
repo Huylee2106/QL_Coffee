@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username   = "root";        // tài khoản MySQL
 $password   = "";            // mật khẩu MySQL
-$dbname     = "shop_db";     // TÊN DATABASE của bạn
+$dbname     = "ql_caffe";     // TÊN DATABASE của bạn
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
