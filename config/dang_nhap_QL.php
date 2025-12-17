@@ -3,7 +3,7 @@ require '../config/config.php';
 session_start();
 
 if (isset($_POST['submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['id']);
+    $username = mysqli_real_escape_string($conn, $_POST['ID']);
     $password = $_POST['password'];
 
     $sql = "SELECT ID, `password`, `name`, sex, `role`
@@ -26,8 +26,8 @@ if (isset($_POST['submit'])) {
         }
 
         if ($isValidPassword) {
-            if ($row['role'] == 0) {
-                header("Location: ../page_staff_manager/page_staff.php");
+            if ($row['role'] == 1) {
+                header("Location: ../page_staff_manager/page_manager.php");
                 exit(); 
             } else {
                 echo '<script>

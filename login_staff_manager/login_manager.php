@@ -1,3 +1,6 @@
+<?php
+    require '../config/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,25 +11,27 @@
     </head>
     <body>
         <h1>Login</h1>
-        
-            <div class="login">
+            <form method="POST" action="../config/dang_nhap_QL.php">
+                    <div class="login">
 
-                <h3><span class="choose"><a href="../login_staff_manager/login_staff.php">Staff</a></span> | <span class="choose active"><a href="../login_staff_manager/login_manager.php">Manager</a></span></h3>
+                    <h3><span class="choose"><a href="../login_staff_manager/login_staff.php">Staff</a></span> | <span class="choose active"><a href="../login_staff_manager/login_manager.php">Manager</a></span></h3>
 
-                <div class="input">
-                    <input type="text" class="name" id="user" placeholder="username" required>
+                    <div class="input">
+                        <input type="text" class="name" id="ID" placeholder="ID" name="ID" required>
+                    </div>
+
+                    <div class="input">
+                        <input type="password" class="password" id="password" placeholder="password" name="password" required>
+                    </div>
+
+                    <div class="remember-forget">
+                        <label for=""><input type="checkbox">Remember password</label>
+                        <a href="../login_staff_manager/forgot_pass.php">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn" name="submit">Login</button>
                 </div>
+            </form>
 
-                <div class="input">
-                    <input type="password" class="password" id="password" placeholder="password" required>
-                </div>
-
-                <div class="remember-forget">
-                    <label for=""><input type="checkbox">Remember password</label>
-                    <a href="../login_staff_manager/forgot_pass.php">Forgot password?</a>
-                </div>
-
-                <button type="submit" class="btn" name="submit">Login</button>
-            </div>
     </body>
 </html>
