@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #fff;
+    color: #333;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+/* ===== HEADER ===== */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    background: #fff;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+
+.nav {
+    display: flex;
+    gap: 24px;
+}
+
+.nav a {
+    position: relative;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 6px 0;
+}
+
+/* gạch chân */
+.nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: #f57c00;
+    transition: 0.3s;
+}
+
+.nav a:hover::after,
+.nav a.active::after {
+    width: 100%;
+}
+
+.nav a.active {
+    color: #f57c00;
+}
+
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lang {
+    background: #f2d28b;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.container {
+    display: flex;
+    padding: 30px 40px;
+    min-height: 450px;
+}
+
+.container.must-try {
+    background: linear-gradient(to bottom, #FFD8A8, #FFFFFF);
+}
+
+.container.coffee {
+    background: linear-gradient(to top, #FFD8A8, #FFFFFF);
+}
+
+.container.tea {
+    background: linear-gradient(to bottom, #FFD8A8, #FFFFFF);
+}
+
+.container.food {
+    background: linear-gradient(to top, #FFD8A8, #FFFFFF);
+}
+
+.container.other {
+    background: linear-gradient(to bottom, #FFD8A8, #FFFFFF);
+}
+
+#musttry,
+#coffee,
+#tea,
+#food,
+#other {
+    scroll-margin-top: 90px;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 220px;
+}
+
+.sidebar h2 {
+    margin-bottom: 16px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    flex: 1;
+    padding-left: 40px;
+}
+
+/* CATEGORY BUTTONS */
+.menu-filter {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 25px;
+    justify-content: space-around;
+}
+
+.pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 30px;
+    border-radius: 999px;
+    border: 1.5px solid #f57c00;
+    background: #fff;
+    color: #f57c00;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.pill .icon {
+    font-size: 16px;
+}
+
+.pill.active {
+    background: #f57c00;
+    color: #fff;
+}
+
+.pill:hover {
+    background: #f57c00;
+    color: #fff;
+}
+
+/* PRODUCT GRID */
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.card {
+    text-align: center;
+}
+
+.card .img {
+    width: 100%;
+    height: 180px;
+    background: #f3f3f3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.card h4 {
+    margin-bottom: 6px;
+}
+
+.price {
+    color: #f57c00;
+    font-weight: bold;
+}
+
+img{
+    width:90%;
+    height:180px;
+    display:cover;
+}

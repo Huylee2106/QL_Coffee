@@ -1,0 +1,103 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ===== BODY ===== */
+body {
+    background: url(../img/background_login.jpg) no-repeat center center/cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+/* ===== WRAPPER ===== */
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== FORM BOX (giống login) ===== */
+.login {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 16px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== TITLE ===== */
+h1 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+/* ===== INPUT BOX ===== */
+.input-box {
+    margin-bottom: 20px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.input-box input::placeholder {
+    color: #e0e0e0;
+}
+
+.input-box input:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 6px #bcd2ff;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #4a90e2;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #357abd;
+}
+
+/* ===== LINK BACK ===== */
+.register-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #bcd2ff;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
