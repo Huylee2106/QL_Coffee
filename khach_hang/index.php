@@ -26,6 +26,9 @@
     <button data-filter="Coffee">Coffee</button>
     <button data-filter="Sinh tố">Sinh tố</button>
     <button data-filter="Trà">Trà</button>
+    <button data-filter="Trà sữa">Trà sữa</button>
+    <button data-filter="Nước ép">Nước ép</button>
+    <button data-filter="Nước ngọt">Nước ngọt</button>
     <button data-filter="Khác">Khác</button> </div>
     
   <div class="main-content">
