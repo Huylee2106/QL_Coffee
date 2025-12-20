@@ -21,6 +21,9 @@ $id_nv   = "NV001";           // ID nhân viên mặc định
 // Có 5 cột cần truyền tham số: ID_bill, Total, ID_TB, ID, bill_status
 $sql_bill = "INSERT INTO bill (ID_bill, Day, Total, ID_TB, ID, bill_status) VALUES (?, NOW(), ?, ?, ?, 0)";
 $stmt_bill = $conn->prepare($sql_bill);
+if (!$stmt_bill) {
+    die("Lỗi SQL BILL: " . $conn->error);
+}
 
 // "sdss" tương ứng với: 
 // s (string - id_bill), d (double - tong_tien), s (string - id_tb), s (string - id_nv)

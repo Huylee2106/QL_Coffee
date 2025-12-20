@@ -42,11 +42,6 @@ $total = $_POST['total'] ?? 0;
         ?>
       </select>
 
-      <h3>Phương thức thanh toán</h3>
-      
-      <input type="radio" name="payment_method" value="Tiền mặt" checked/> Tiền mặt<br />  
-      <input type="radio" name="payment_method" value="Chuyển khoản" /> Chuyển khoản<br />
-
       <h3>Đơn hàng của bạn</h3>
       <div class="summary-box">
         <?php if(!empty($cart)){ foreach($cart as $item){ ?>
