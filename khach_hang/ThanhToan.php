@@ -25,6 +25,23 @@ $total = $_POST['total'] ?? 0;
       <label>Số điện thoại</label>
       <input name="sdt" type="text" required />
 
+      <h3>Vị trí ngồi</h3>
+      <label for="id_tb">Chọn bàn hoặc Mang đi:</label>
+      <select name="id_tb" id="id_tb" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+        <option value="Mang đi">Mang đi (Take away)</option>
+        <?php
+        require '../config/config.php';
+        // Lấy danh sách các bàn đang trống
+        $sql_tables = "SELECT ID_TB FROM tables WHERE Status = 'Trống'";
+        $res_tables = $conn->query($sql_tables);
+        if ($res_tables->num_rows > 0) {
+            while($table = $res_tables->fetch_assoc()) {
+                echo "<option value='{$table['ID_TB']}'>Bàn {$table['ID_TB']}</option>";
+            }
+        }
+        ?>
+      </select>
+
       <h3>Phương thức thanh toán</h3>
       
       <input type="radio" name="payment_method" value="Tiền mặt" checked/> Tiền mặt<br />  
@@ -42,7 +59,7 @@ $total = $_POST['total'] ?? 0;
       <input type="hidden" name="json_cart" value='<?php echo json_encode($cart); ?>'>
       <input type="hidden" name="tong_tien" value='<?php echo $total; ?>'>
 
-      <button class="btn">Hoàn tất thanh toán</button>
+      <button class="btn">Gửi yêu cầu thanh toán</button>
     </form>
   </div>
 </body>
