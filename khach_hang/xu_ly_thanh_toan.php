@@ -28,7 +28,7 @@ $stmt_bill->bind_param("sdss", $id_bill, $tong_tien, $id_tb, $id_nv);
 $stmt_bill->execute();
 
 // 4. LƯU CHI TIẾT VÀO BẢNG DETAILS_ORDER
-$sql_detail = "INSERT INTO details_order (food_name, id_food, qty, price, ID_bill, name_KH, phonenumber, ID_TB) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$sql_detail = "INSERT INTO details_order (food_name, id_food, qty, price, ID_bill, name_KH, phone_number, ID_TB, item_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
 $stmt_detail = $conn->prepare($sql_detail);
 
 if (!empty($cart)) {
@@ -52,10 +52,6 @@ if (!empty($cart)) {
 echo "<h2>Đặt hàng thành công!</h2>";
 echo "<p>Cảm ơn khách hàng: $ten_kh</p>";
 echo "<a href='index.php'>Quay lại trang chủ</a>"; //
-
-if ($id_tb != 'Mang đi') {
-    $conn->query("UPDATE tables SET Status = 'Có khách' WHERE ID_TB = '$id_tb'");
-}
 
 // Chỉ cập nhật trạng thái bàn nếu thực sự là ngồi tại bàn (không phải Mang đi)
 if ($id_tb != 'Mang đi') {
