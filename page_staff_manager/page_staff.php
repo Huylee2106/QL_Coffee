@@ -1,6 +1,6 @@
 <?php
+    session_start();
     require '../config/config.php';
-    
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -41,6 +41,11 @@
             <li onclick="showPage('view-recipe', this)">
                 <a href="../config/logout.php"><button class="logout-btn">Đăng xuất</button></a>
             </li>
+            <li>
+                <a href="../page_staff_manager/change_password.php">
+                <button class="logout-btn" style="background: #ff00aeff; margin-top: 10px;">Đổi mật khẩu</button>
+            </a>
+</li>
         </ul>
     </aside>
 
@@ -82,13 +87,13 @@
                 <table border="1" width="100%" style="border-collapse: collapse; text-align: center;">
                     <tr style="background-color: #f2f2f2;">
                         <th>Mã Đơn</th>
-                        <th>Vị trí</th> <th>Tên Khách</th>
+                        <th>Vị trí</th> <th>Tên Khách</th> <th>Số điện thoại</th>
                         <th>Danh sách món</th>
                         <th>Thao tác</th>
                     </tr>
                     <?php
                     // Cập nhật SQL để lấy thêm ID_TB (Vị trí bàn)
-                    $sql = "SELECT b.ID_bill, b.ID_TB, d.name_KH, 
+                    $sql = "SELECT b.ID_bill, b.ID_TB, d.name_KH,d.phone_number, 
                                 GROUP_CONCAT(CONCAT(d.food_name, ' (', d.qty, ')') SEPARATOR '<br>') as list_mon 
                             FROM bill b
                             JOIN details_order d ON b.ID_bill = d.ID_bill
@@ -103,6 +108,7 @@
                                 <td>{$row['ID_bill']}</td>
                                 <td><strong>$vi_tri</strong></td>
                                 <td>{$row['name_KH']}</td>
+                                <td>{$row['phone_number']}</td>
                                 <td style='text-align: left; padding: 10px;'>{$row['list_mon']}</td>
                                 <td><a href='xu_ly_vien.php?action=done&id={$row['ID_bill']}'>Hoàn thành</a></td>
                             </tr>";
