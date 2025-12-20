@@ -17,6 +17,7 @@
             <li onclick="showPage('salary')">💰 Thanh toán lương</li>
             <li onclick="showPage('inventory')">📦 Kiểm kho</li>
             <li onclick="showPage('employee')">👤 Tra cứu nhân viên</li>
+            <li> <a href="../config/logout.php"><button class="logout-btn">Đăng xuất</button></a></li>
         </ul>
     </aside>
 

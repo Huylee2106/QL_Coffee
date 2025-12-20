@@ -65,3 +65,14 @@
     min-height: 200px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
+
+.logout-btn {
+margin-top: 20px;
+padding: 10px;
+width: 100%;
+border: none;
+background-color: #f44336;
+color: white;
+border-radius: 5px;
+cursor: pointer;
+}

@@ -28,6 +28,9 @@
             <li onclick="showPage('view-recipe', this)">
                 ➕ Thêm công thức
             </li>
+            <li onclick="showPage('view-recipe', this)">
+                <a href="../config/logout.php"><button class="logout-btn">Đăng xuất</button></a>
+            </li>
         </ul>
     </aside>
 
@@ -62,7 +65,9 @@
         <section id="view-recipe" class="page">
             <h1>Thêm món</h1>
             <div class="box">Thêm công thức cho món</div>
+            
         </section>
+        
 
     </main>
 
