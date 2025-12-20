@@ -132,7 +132,7 @@
         </section>
         
         <section id="manage-tables" class="page">
-    <h1>Quản lý trạng thái bàn (Dọn dẹp)</h1>
+        <h1>Quản lý trạng thái bàn (Dọn dẹp)</h1>
             <div class="box">
                 <table border="1" width="100%" style="border-collapse: collapse; text-align: center;">
                     <tr style="background-color: #f2f2f2;">
