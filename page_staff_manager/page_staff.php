@@ -16,6 +16,8 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <h2 class="logo">NHÂN VIÊN</h2>
+        <p class="login-user">👋 Xin chào, </p>
+        <p class="login-user">ID: </p>
         <ul class="menu">
             <li class="active" onclick="showPage('view-schedule', this)">
                 📅 Xem lịch

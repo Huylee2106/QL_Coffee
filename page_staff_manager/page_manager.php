@@ -18,6 +18,8 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <h2 class="logo">QUẢN LÝ</h2>
+        <p class="login-user">👋 Xin chào, </p>
+        <p class="login-user">ID: </p>
         <ul class="menu">
             <li class="active" onclick="showPage('schedule')">📅 Thêm lịch</li>
             <li onclick="showPage('salary')">💰 Thanh toán lương</li>
@@ -56,7 +58,7 @@
                         <input type="date" name="date" placeholder="Nhập Ngày Làm Việc" required>
                         </div>
                         <div class="form-group">
-                        <label>Chọn Ngày Làm Việc</label>
+                        <label>Chọn Ca Làm Việc</label>
                         <select name="shift" required>
                             <option value="">Chọn Ca Làm Việc</option>
                             <option value="Ca Sáng">Ca Sáng - 6h -> 10h</option>
