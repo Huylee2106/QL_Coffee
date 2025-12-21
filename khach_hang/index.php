@@ -82,7 +82,7 @@
         <input type="hidden" name="total" id="total-input">
       </form>
 
-      <button id="checkout-btn">Thanh toán</button>
+      <button class="buy-btn" id="checkout-btn">Thanh toán</button>
     </div>
 
   </div> <div class="info">

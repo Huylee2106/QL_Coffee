@@ -43,7 +43,7 @@
 /* ===== CONTENT ===== */
 .content {
     flex: 1;
-    padding: 30px;
+    padding: 10px;
     background: #f1f5f9;
 }
 
@@ -58,7 +58,8 @@
 
 /* BOX CHỨA NỘI DUNG */
 .box {
-    margin-top: 20px;
+    max-height: 730px;
+    margin-top: -6px;
     padding: 20px;
     background: #ffffff;
     border-radius: 10px;

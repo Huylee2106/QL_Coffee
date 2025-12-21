@@ -35,7 +35,7 @@
             <h1>Thêm lịch làm việc</h1>
             <div class="box">
                 <div class="container">
-                    <h2>Thêm Lịch CHo Nhân Viên</h2>
+                    <h2>Thêm Lịch Cho Nhân Viên</h2>
                     <form action="../config/them_nv.php" method="POST">
                         <div class="form-group">
                         <select name="ID" id="ID_NV" required>
@@ -73,7 +73,6 @@
             </div>
         </section>
         <section id="add_staff" class="page">
-            <h1>thêm nhân viên</h1>
             <div class="box">
                 <div class="container">
                     <h2>Cấp Tài Khoản Nhân Viên</h2>
