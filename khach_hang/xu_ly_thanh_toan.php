@@ -56,10 +56,10 @@ echo "<h2>Đặt hàng thành công!</h2>";
 echo "<p>Cảm ơn khách hàng: $ten_kh</p>";
 echo "<a href='index.php'>Quay lại trang chủ</a>"; //
 
-// Chỉ cập nhật trạng thái bàn nếu thực sự là ngồi tại bàn (không phải Mang đi)
-if ($id_tb != 'Mang đi') {
-    $conn->query("UPDATE tables SET Status = 'Có khách' WHERE ID_TB = '$id_tb'");
-}
+// // Chỉ cập nhật trạng thái bàn nếu thực sự là ngồi tại bàn (không phải Mang đi)
+// if ($id_tb != 'Mang đi') {
+//     $conn->query("UPDATE tables SET Status = 'Có khách' WHERE ID_TB = '$id_tb'");
+// }
 
 $conn->close(); //
 ?>

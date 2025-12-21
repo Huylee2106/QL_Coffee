@@ -66,7 +66,8 @@
                 <tr>
                     <th>Mã Đơn</th>
                     <th>Tổng tiền</th>
-                    <th>Hành động</th>
+                    <th>Tiếp nhận yêu cầu</th>
+                    <th>Hủy yêu cầu</th>
                 </tr>
                 <?php
                 $sql_confirm = "SELECT * FROM bill WHERE bill_status = 0";
@@ -76,6 +77,7 @@
                             <td>{$row['ID_bill']}</td>
                             <td>".number_format($row['Total'])." VNĐ</td>
                             <td><a href='xu_ly_vien.php?action=confirm&id={$row['ID_bill']}'>Xác nhận đã thu tiền</a></td>
+                            <td><a href='xu_ly_vien.php?action=delete&id={$row['ID_bill']}'>Từ chối</a></td>
                         </tr>";
                 }
                 ?>
