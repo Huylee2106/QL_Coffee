@@ -23,7 +23,7 @@
                 📅 Xem lịch
             </li>
             <li onclick="showPage('confirm-payment', this)">
-                => Xác nhận thanh toán
+                ✅ Xác nhận thanh toán
             </li>
             <li onclick="showPage('view-orders', this)">
                 ☕ Yêu cầu pha chế

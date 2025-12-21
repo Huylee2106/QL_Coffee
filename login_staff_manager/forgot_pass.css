@@ -1,4 +1,6 @@
-/* ===== RESET ===== */
+/* ===== RESET & GOOGLE FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,98 +8,147 @@
     font-family: "Poppins", sans-serif;
 }
 
-/* ===== BODY ===== */
 body {
     background: url(../login_staff_manager/image/background_login.jpg) no-repeat center center/cover;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    position: relative;
+    padding: 20px;
 }
 
-/* ===== WRAPPER ===== */
+/* Lớp phủ tối ấm giúp nổi bật form */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65); /* Tăng độ tối một chút */
+    z-index: 0;
+}
+
 .wrapper {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-width: 420px; /* Giới hạn chiều rộng để form cân đối */
+    z-index: 1;
 }
 
-/* ===== FORM BOX (giống login) ===== */
+/* ===== FORM BOX (Hiệu ứng mặt kính sang trọng) ===== */
 .login {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    padding: 30px;
-    border-radius: 16px;
-    width: 320px;
+    width: 100%;
+    padding: 45px 35px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.07); /* Trong suốt nhẹ */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Viền kính */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     text-align: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
-/* ===== TITLE ===== */
-h1 {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 5px;
-    font-size: 26px;
-    letter-spacing: 1px;
+/* ===== TIÊU ĐỀ (Cực kỳ quan trọng) ===== */
+.login h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #f3e5ab !important; /* Màu vàng kem */
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* ===== INPUT BOX ===== */
 .input-box {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .input-box input {
     width: 100%;
-    padding: 12px 15px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.2);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2); /* Nền input tối để nổi chữ trắng */
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
     outline: none;
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .input-box input::placeholder {
-    color: #e0e0e0;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .input-box input:focus {
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 6px #bcd2ff;
+    border-color: #d4a373;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 12px rgba(212, 163, 115, 0.3);
 }
 
-/* ===== BUTTON ===== */
+/* ===== BUTTON (Màu Cafe Latte) ===== */
 .btn {
     width: 100%;
-    padding: 12px;
-    background: #4a90e2;
+    padding: 16px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #bc6c25, #8b4513); /* Gradient nâu gỗ */
     color: #fff;
     font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
-    background: #357abd;
+    transform: translateY(-2px);
+    filter: brightness(1.2);
+    box-shadow: 0 8px 25px rgba(188, 108, 37, 0.4);
 }
 
-/* ===== LINK BACK ===== */
+/* ===== LINKS (Quay lại, Quên mật khẩu) ===== */
 .register-link {
-    margin-top: 20px;
-    font-size: 14px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .register-link a {
-    color: #bcd2ff;
+    color: #f3e5ab;
     text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    transition: 0.3s;
+    border-bottom: 1px solid transparent;
 }
 
 .register-link a:hover {
+    color: #fff;
+    border-bottom: 1px solid #f3e5ab;
+}
+
+/* Nhắm trực tiếp vào h1 để đổi sang màu trắng */
+.wrapper h1, h1 {
+    color: #ffffff !important; /* Chuyển thành màu trắng nổi bật */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 1) !important; /* Đổ bóng đen đậm để rõ chữ */
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Sửa luôn màu cho các dòng chữ liên kết phía dưới cho đồng bộ */
+.register-link p, .register-link a {
+    color: #f3e5ab !important; /* Màu vàng kem sang trọng */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-link a:hover {
+    color: #ffffff !important;
     text-decoration: underline;
 }
