@@ -18,6 +18,8 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <h2 class="logo">QUẢN LÝ</h2>
+        <p class="login-user">👋 Xin chào, </p>
+        <p class="login-user">ID: </p>
         <ul class="menu">
             <li class="active" onclick="showPage('schedule')">📅 Thêm lịch</li>
             <li onclick="showPage('salary')">💰 Thanh toán lương</li>
@@ -35,7 +37,7 @@
             <h1>Thêm lịch làm việc</h1>
             <div class="box">
                 <div class="container">
-                    <h2>Thêm Lịch CHo Nhân Viên</h2>
+                    <h2>Thêm Lịch Cho Nhân Viên</h2>
                     <form action="../config/them_nv.php" method="POST">
                         <div class="form-group">
                         <select name="ID" id="ID_NV" required>
@@ -56,7 +58,7 @@
                         <input type="date" name="date" placeholder="Nhập Ngày Làm Việc" required>
                         </div>
                         <div class="form-group">
-                        <label>Chọn Ngày Làm Việc</label>
+                        <label>Chọn Ca Làm Việc</label>
                         <select name="shift" required>
                             <option value="">Chọn Ca Làm Việc</option>
                             <option value="Ca Sáng">Ca Sáng - 6h -> 10h</option>
@@ -73,7 +75,6 @@
             </div>
         </section>
         <section id="add_staff" class="page">
-            <h1>thêm nhân viên</h1>
             <div class="box">
                 <div class="container">
                     <h2>Cấp Tài Khoản Nhân Viên</h2>

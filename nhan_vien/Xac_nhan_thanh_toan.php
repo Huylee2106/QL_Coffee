@@ -19,6 +19,12 @@ $payment_method = $_POST['payment_method'] ?? '';
 $json_cart      = $_POST['json_cart']      ?? '[]';
 $tong_tien      = $_POST['tong_tien']      ?? 0;
 
+// Thêm bill_status = 0 vào câu lệnh Insert
+$sql_bill = "INSERT INTO bill (ID_bill, Day, Total, ID_TB, ID, bill_status) VALUES (?, NOW(), ?, ?, 'NV001', 0)";
+$stmt_bill = $conn->prepare($sql_bill);
+$stmt_bill->bind_param("sds", $id_bill, $tong_tien, $id_tb);
+$stmt_bill->execute();
+
 // (tuỳ chọn) ép kiểu số cho tổng tiền
 $tong_tien = (int)$tong_tien;
 
