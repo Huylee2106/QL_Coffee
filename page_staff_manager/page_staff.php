@@ -15,42 +15,30 @@
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
-        <h2 class="logo">NHÂN VIÊN</h2>
-        
-        <p class="login-user">👋 Xin chào, <?php echo isset($_SESSION['name']) ? $_SESSION['name'] : 'Chưa có thông tin'; ?></strong></p>
-        <p class="login-user">ID: <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'Chưa có thông tin'; ?></strong></p>
-        <ul class="menu">
-            <li class="active" onclick="showPage('view-schedule', this)">
-                📅 Xem lịch
-            </li>
-            <li onclick="showPage('confirm-payment', this)">
-                ✅ Xác nhận thanh toán
-            </li>
-            <li onclick="showPage('view-orders', this)">
-                ☕ Yêu cầu pha chế
-            </li>
-            <li onclick="showPage('view-inventory', this)">
-                📦 Xem kho
-            </li>
-            <li onclick="showPage('view-dish', this)">
-                ➕ Thêm món
-            </li>
-            <li onclick="showPage('view-recipe', this)">
-                ➕ Thêm công thức
-            </li>
-            <li onclick="showPage('manage-tables', this)">
-                🪑 Quản lý bàn
-            </li>
-            <li onclick="showPage('view-recipe', this)">
-                <a href="../config/logout.php"><button class="logout-btn">Đăng xuất</button></a>
-            </li>
-            <li>
-                <a href="../page_staff_manager/change_password.php">
-                <button class="logout-btn" style="background: #ff00aeff; margin-top: 10px;">Đổi mật khẩu</button>
-            </a>
-</li>
-        </ul>
-    </aside>
+    <h2 class="logo">NHÂN VIÊN</h2>
+    <p class="login-user">👋 Xin chào, <?php echo isset($_SESSION['name']) ? $_SESSION['name'] : 'Chưa có thông tin'; ?></strong></p></p>
+    <p class="login-user">ID: <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'Chưa có thông tin'; ?></strong></p></p>
+    <ul class="menu">
+        <li class="active" onclick="showPage('view-schedule', this)">📅 Xem lịch</li>
+        <li onclick="showPage('confirm-payment', this)">✅ Xác nhận thanh toán</li>
+        <li onclick="showPage('view-orders', this)">☕ Yêu cầu pha chế</li>
+        <li onclick="showPage('view-inventory', this)">📦 Xem kho</li>
+        <li onclick="showPage('view-dish', this)">➕ Thêm món</li>
+        <li onclick="showPage('view-recipe', this)">➕ Thêm công thức</li>
+        <li onclick="showPage('manage-tables', this)">🪑 Quản lý bàn</li>
+    </ul>
+
+    <!-- FOOTER -->
+    <div class="sidebar-footer">
+        <a href="../page_staff_manager/change_password.php">
+            <button class="change-password-btn">🔑 Đổi mật khẩu</button>
+        </a>
+
+        <a href="../config/logout.php">
+            <button class="logout-btn">🚪 Đăng xuất</button>
+        </a>
+    </div>
+</aside>
 
     <!-- CONTENT -->
     <main class="content">
