@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 22, 2025 lúc 05:08 AM
+-- Thời gian đã tạo: Th12 22, 2025 lúc 09:28 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -36,6 +36,13 @@ CREATE TABLE `bill` (
   `bill_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `bill`
+--
+
+INSERT INTO `bill` (`ID_bill`, `Day`, `Total`, `ID_TB`, `ID`, `bill_status`) VALUES
+('B051131', '2025-12-22 11:11:31', 25000, 'TB_02', 'NV001', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +60,13 @@ CREATE TABLE `details_order` (
   `ID_TB` varchar(20) NOT NULL,
   `item_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `details_order`
+--
+
+INSERT INTO `details_order` (`food_name`, `id_food`, `qty`, `price`, `ID_bill`, `name_KH`, `phonenumber`, `ID_TB`, `item_status`) VALUES
+('Bánh SandWich', 'BA_02', 1, 25000, 'B051131', 'Nguyễn', '123456', 'TB_02', 1);
 
 -- --------------------------------------------------------
 
@@ -154,6 +168,31 @@ CREATE TABLE `shift` (
   `shift` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `shift`
+--
+
+INSERT INTO `shift` (`ID_shift`, `ID`, `Name`, `Working_date`, `shift`) VALUES
+('SH001', 'NV001', ' Nguyễn Trọng Nguyễn', '2025-12-23', 'Ca Sáng'),
+('SH002', 'NV001', ' Nguyễn Trọng Nguyễn', '2025-12-23', 'Ca Tối'),
+('SH003', 'NV002', ' Hứa Gia Kiên', '2025-12-23', 'Ca Tối'),
+('SH004', 'NV002', ' Hứa Gia Kiên', '2025-12-23', 'Ca Trưa');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stock_receipt`
+--
+
+CREATE TABLE `stock_receipt` (
+  `ID_MT` varchar(20) NOT NULL,
+  `Name_MT` varchar(30) NOT NULL,
+  `Import_date` date NOT NULL,
+  `Price` float NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `Unit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -180,7 +219,7 @@ INSERT INTO `tables` (`ID_TB`, `Status`) VALUES
 ('TB_07', 'Trống'),
 ('TB_08', 'Trống'),
 ('TB_09', 'Trống'),
-('TB_10', 'Có khách');
+('TB_10', 'Trống');
 
 -- --------------------------------------------------------
 
@@ -237,8 +276,6 @@ CREATE TABLE `warehouse` (
   `ID_MT` varchar(20) NOT NULL,
   `Name_MT` varchar(30) NOT NULL,
   `Quantity` int(11) NOT NULL,
-  `Import_Date` date NOT NULL,
-  `Expiry_Date` date NOT NULL,
   `Unit` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
