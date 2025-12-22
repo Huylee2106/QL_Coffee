@@ -27,6 +27,8 @@ if (isset($_POST['submit'])) {
 
         if ($isValidPassword) {
             if ($row['role'] == 1) {
+                $_SESSION['id']=$row['ID'];
+                $_SESSION['name']=$row['name'];
                 header("Location: ../page_staff_manager/page_manager.php");
                 exit(); 
             } else {

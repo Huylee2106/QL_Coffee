@@ -1,5 +1,6 @@
 <?php
     require '../config/config.php';
+    session_start();
     
 ?>
 <!DOCTYPE html>
@@ -18,8 +19,8 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <h2 class="logo">QUẢN LÝ</h2>
-        <p class="login-user">👋 Xin chào, </p>
-        <p class="login-user">ID: </p>
+        <p class="login-user">👋 Xin chào, <?php echo isset($_SESSION['name']) ? $_SESSION['name'] : 'Chưa có thông tin'; ?></strong></p></p>
+        <p class="login-user">ID: <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'Chưa có thông tin'; ?></strong></p></p>
         <ul class="menu">
             <li class="active" onclick="showPage('schedule')">📅 Thêm lịch</li>
             <li onclick="showPage('salary')">💰 Thanh toán lương</li>
@@ -38,7 +39,7 @@
             <div class="box">
                 <div class="container">
                     <h2>Thêm Lịch Cho Nhân Viên</h2>
-                    <form action="../config/them_nv.php" method="POST">
+                    <form action="../config/them_lich.php" method="POST">
                         <div class="form-group">
                         <select name="ID" id="ID_NV" required>
                             <option value="">Chọn ID Nhân Viên</option>

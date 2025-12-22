@@ -16,8 +16,9 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <h2 class="logo">NHÂN VIÊN</h2>
-        <p class="login-user">👋 Xin chào, </p>
-        <p class="login-user">ID: </p>
+        
+        <p class="login-user">👋 Xin chào, <?php echo isset($_SESSION['name']) ? $_SESSION['name'] : 'Chưa có thông tin'; ?></strong></p>
+        <p class="login-user">ID: <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'Chưa có thông tin'; ?></strong></p>
         <ul class="menu">
             <li class="active" onclick="showPage('view-schedule', this)">
                 📅 Xem lịch
@@ -57,7 +58,33 @@
         <!-- XEM LỊCH -->
         <section id="view-schedule" class="page active">
             <h1>Xem lịch làm việc</h1>
-            <div class="box">Nội dung lịch làm việc</div>
+            <div class="box">
+                <table border="1" width="100%" style="border-collapse: collapse; text-align: center;">
+                    <tr style="background-color: #f2f2f2;">
+                        <th>Mã Ca Làm</th>
+                        <th>ID Nhân Viên</th> 
+                        <th>Tên Nhân Viên</th>
+                        <th>Ngày Làm Việc</th>
+                        <th>Ca Làm Việc</th>
+                    </tr>
+                    <?php
+                    $ID_NV = $_SESSION['id'];
+                    $sql = "SELECT * FROM SHIFT WHERE ID ='$ID_NV'";
+
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>{$row['ID_shift']}</td>
+                                <td>{$row['ID']}</td>
+                                <td>{$row['Name']}</td>
+                                <td>{$row['Working_date']}</td>
+                                <td>{$row['shift']}</td>
+                            </tr>";
+                    }
+                    ?>
+                </table>
+
+            </div>
         </section>
 
         <section id="confirm-payment" class="page">
