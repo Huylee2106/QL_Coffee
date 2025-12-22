@@ -25,9 +25,14 @@
             <li class="active" onclick="showPage('schedule')">📅 Thêm lịch</li>
             <li onclick="showPage('salary')">💰 Thanh toán lương</li>
             <li onclick="showPage('inventory')">📦 Kiểm kho</li>
+            <li onclick="showPage('import')">📥 Thêm kho</li>
+            <li onclick="showPage('StockReceipt')">🧾 Hóa đơn nhập kho</li>
             <li onclick="showPage('add_staff')">➕ Thêm Nhân Viên</li>
             <li onclick="showPage('employee')">👤 Tra cứu nhân viên</li>
             <li> <a href="../config/logout.php"><button class="logout-btn">Đăng xuất</button></a></li>
+            <li>
+                <a href="../page_staff_manager/change_password.php">
+                <button class="logout-btn" style="background: #ff00aeff; margin-top: 10px;">Đổi mật khẩu</button></a></li>
         </ul>
     </aside>
 
@@ -134,7 +139,171 @@
 
         <section id="inventory" class="page">
             <h1>Kiểm kho</h1>
-            <div class="box">Nội dung kiểm kho</div>
+            <div class="box">
+                <table border="1" style="width:100%; border-collapse: collapse; text-align: center;">
+                    <thead>
+                        <tr style="background: #f4f4f4;">
+                            <th>Mã NL</th>
+                            <th>Tên Nguyên Liệu</th>
+                            <th>Số Lượng Tồn</th>
+                            <th>Đơn Vị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql_inv = "SELECT * FROM warehouse";
+                        $res_inv = mysqli_query($conn, $sql_inv);
+                        while($row = mysqli_fetch_assoc($res_inv)) {
+                            echo "<tr>
+                                    <td>{$row['ID_MT']}</td>
+                                    <td>{$row['Name_MT']}</td>
+                                    <td>{$row['Quantity']}</td>
+                                    <td>{$row['Unit']}</td>
+                                </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="import" class="page">
+            <h1>Nhập kho nguyên liệu</h1>
+            <div class="box">
+                <div class="container">
+                    <form action="../config/them_kho.php" method="POST">
+                        <div class="form-group">
+                            <label>Chọn Nguyên Liệu (Mã - Tên)</label>
+                            <select name="ID_MT" id="select_MT" onchange="updateNLDetails()" required>
+                                <option value="">-- Chọn nguyên liệu hoặc thêm mới --</option>
+                                <option value="NEW"> + Thêm nguyên liệu mới </option>
+                                <?php
+                                // Lấy dữ liệu từ bảng warehouse
+                                $sql_list = "SELECT * FROM warehouse";
+                                $res_list = mysqli_query($conn, $sql_list);
+                                while($item = mysqli_fetch_assoc($res_list)) {
+                                    // QUAN TRỌNG: Phải có data-name và data-unit
+                                    echo "<option value='{$item['ID_MT']}' 
+                                                data-name='{$item['Name_MT']}' 
+                                                data-unit='{$item['Unit']}'>
+                                            {$item['ID_MT']} - {$item['Name_MT']}
+                                        </option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div id="new_id_group" class="form-group" style="display:none;">
+                            <input type="text" name="new_ID_MT" id="new_ID_MT" placeholder="Nhập Mã NL mới (VD: NL05)">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="Name_MT" id="Name_MT" placeholder="Tên nguyên liệu" readonly required>
+                        </div>
+                
+                        <div class="form-group">
+                            <input type="text" name="Unit" id="Unit" placeholder="Đơn vị tính" readonly required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="number" name="Quantity" placeholder="Số lượng nhập" required min="1">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="number" name="Price" placeholder="Giá nhập (VNĐ)" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ngày nhập</label>
+                            <input type="date" name="Import_date" value="<?php echo date('Y-m-d'); ?>" required>
+                        </div>
+                
+                        <button type="submit" name="btnNhapKho">Xác Nhận Nhập</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="StockReceipt" class="page">
+            <h1>Hóa đơn nhập kho</h1>
+            <div class="box">
+                <div style="margin-bottom: 20px;">
+                    <form method="GET" action="">
+                        <input type="hidden" name="page" value="StockReceipt"> 
+        
+                        <label>Tên nguyên liệu: </label>
+                        <input type="text" name="search_name" placeholder="Nhập tên cần tìm..." 
+                            value="<?php echo isset($_GET['search_name']) ? htmlspecialchars($_GET['search_name']) : ''; ?>" 
+                            style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+
+                        <label style="margin-left: 10px;">Ngày nhập: </label>
+                        <input type="date" name="filter_date" 
+                            value="<?php echo isset($_GET['filter_date']) ? $_GET['filter_date'] : ''; ?>"
+                            style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+
+                        <button type="submit" style="padding: 6px 15px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px;">Tìm kiếm</button>
+                        <a href="page_manager.php"><button type="button" style="padding: 6px 15px; border-radius: 4px;">Làm mới</button></a>
+                    </form>
+                </div>
+
+                <table border="1" style="width:100%; border-collapse: collapse; text-align: center;">
+                    <thead>
+                        <tr style="background: #f4f4f4;">
+                            <th>Mã NL</th>
+                            <th>Tên Nguyên Liệu</th>
+                            <th>Ngày Nhập</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn Vị</th>
+                            <th>Giá Nhập (VNĐ)</th>
+                            <th>Tổng Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Khởi tạo mảng điều kiện
+                        $where_clauses = [];
+
+                        // Kiểm tra tìm kiếm theo tên
+                        if (isset($_GET['search_name']) && !empty($_GET['search_name'])) {
+                            $s_name = mysqli_real_escape_string($conn, $_GET['search_name']);
+                            $where_clauses[] = "Name_MT LIKE '%$s_name%'";
+                        }
+
+                        // Kiểm tra lọc theo ngày
+                        if (isset($_GET['filter_date']) && !empty($_GET['filter_date'])) {
+                            $f_date = mysqli_real_escape_string($conn, $_GET['filter_date']);
+                            $where_clauses[] = "Import_date = '$f_date'";
+                        }
+
+                        // Xây dựng câu SQL
+                        $sql_receipt = "SELECT * FROM stock_receipt";
+                        if (count($where_clauses) > 0) {
+                            $sql_receipt .= " WHERE " . implode(" AND ", $where_clauses);
+                        }
+                        $sql_receipt .= " ORDER BY Import_date DESC";
+
+                        $res_receipt = mysqli_query($conn, $sql_receipt);
+
+                        if (mysqli_num_rows($res_receipt) > 0) {
+                            while($row = mysqli_fetch_assoc($res_receipt)) {
+                                $total = $row['Quantity'] * $row['Price'];
+                                echo "<tr>
+                                        <td>{$row['ID_MT']}</td>
+                                        <td>{$row['Name_MT']}</td>
+                                        <td>" . date('d/m/Y', strtotime($row['Import_date'])) . "</td>
+                                        <td>{$row['Quantity']}</td>
+                                        <td>{$row['Unit']}</td>
+                                        <td>" . number_format($row['Price'], 0, ',', '.') . "</td>
+                                        <td>" . number_format($total, 0, ',', '.') . "</td>
+                                    </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' style='padding: 20px;'>Không tìm thấy hóa đơn nào phù hợp với yêu cầu tìm kiếm.</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="employee" class="page">
@@ -146,7 +315,7 @@
 
 </div>
 <script src="../page_staff_manager/lay_ten_nv.js"></script>
-
 <script src="../page_staff_manager/page_manager.js"></script>
+<script src="../page_staff_manager/mau_nhap_kho.js"></script>
 </body>
 </html>
