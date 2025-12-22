@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 19, 2025 lúc 05:06 PM
+-- Thời gian đã tạo: Th12 22, 2025 lúc 05:08 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -32,7 +32,8 @@ CREATE TABLE `bill` (
   `Day` datetime NOT NULL,
   `Total` float NOT NULL,
   `ID_TB` varchar(20) NOT NULL,
-  `ID` varchar(20) NOT NULL
+  `ID` varchar(20) NOT NULL,
+  `bill_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -49,7 +50,8 @@ CREATE TABLE `details_order` (
   `ID_bill` varchar(20) NOT NULL,
   `name_KH` varchar(30) NOT NULL,
   `phonenumber` varchar(10) NOT NULL,
-  `ID_TB` varchar(20) NOT NULL
+  `ID_TB` varchar(20) NOT NULL,
+  `item_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -149,7 +151,7 @@ CREATE TABLE `shift` (
   `ID` varchar(20) NOT NULL,
   `Name` varchar(30) NOT NULL,
   `Working_date` date NOT NULL,
-  `shift` varchar(10) NOT NULL
+  `shift` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -168,6 +170,7 @@ CREATE TABLE `tables` (
 --
 
 INSERT INTO `tables` (`ID_TB`, `Status`) VALUES
+('Mang đi', 'Trống'),
 ('TB_01', 'Trống'),
 ('TB_02', 'Trống'),
 ('TB_03', 'Trống'),
@@ -177,7 +180,7 @@ INSERT INTO `tables` (`ID_TB`, `Status`) VALUES
 ('TB_07', 'Trống'),
 ('TB_08', 'Trống'),
 ('TB_09', 'Trống'),
-('TB_10', 'Trống');
+('TB_10', 'Có khách');
 
 -- --------------------------------------------------------
 
@@ -187,13 +190,14 @@ INSERT INTO `tables` (`ID_TB`, `Status`) VALUES
 
 CREATE TABLE `user` (
   `ID` varchar(20) NOT NULL,
-  `password` varchar(30) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `email` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `Sex` varchar(3) NOT NULL,
-  `Date of birth` date NOT NULL,
+  `Date_of_birth` date NOT NULL,
   `Address` varchar(50) NOT NULL,
   `Position` varchar(20) NOT NULL,
+  `Phone_number` varchar(10) NOT NULL,
   `Role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -201,9 +205,10 @@ CREATE TABLE `user` (
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`ID`, `password`, `email`, `name`, `Sex`, `Date of birth`, `Address`, `Position`, `Role`) VALUES
-('NV001', '123456', '', 'Nguyễn Trọng Nguyễn', 'Nam', '0000-00-00', 'Tp.HCM', 'Nhân Viên', 0),
-('QL001', '123456', '', 'Nguyễn Nhật Long', 'Nam', '2005-04-03', 'TP.HCM', 'Quản Lý', 1);
+INSERT INTO `user` (`ID`, `password`, `email`, `name`, `Sex`, `Date_of_birth`, `Address`, `Position`, `Phone_number`, `Role`) VALUES
+('NV001', '123456', '', 'Nguyễn Trọng Nguyễn', 'Nam', '0000-00-00', 'Tp.HCM', 'Nhân Viên', '', 0),
+('NV002', '$2y$10$r5hItuw1leZtoPBysiaCg.5WSSMOv53D1pfMBHc/fNKyVB.TiylyW', 'kienhua@gmail.com', 'Hứa Gia Kiên', 'Nam', '2005-11-02', 'Phú Nhuận, Tp Hồ Chí Minh', 'Thu Ngân', '', 0),
+('QL001', '123456', '', 'Nguyễn Nhật Long', 'Nam', '2005-04-03', 'TP.HCM', 'Quản Lý', '', 1);
 
 -- --------------------------------------------------------
 

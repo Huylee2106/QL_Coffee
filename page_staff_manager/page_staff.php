@@ -97,7 +97,7 @@
                     </tr>
                     <?php
                     // Cập nhật SQL để lấy thêm ID_TB (Vị trí bàn)
-                    $sql = "SELECT b.ID_bill, b.ID_TB, d.name_KH,d.phone_number, 
+                    $sql = "SELECT b.ID_bill, b.ID_TB, d.name_KH,d.phonenumber, 
                                 GROUP_CONCAT(CONCAT(d.food_name, ' (', d.qty, ')') SEPARATOR '<br>') as list_mon 
                             FROM bill b
                             JOIN details_order d ON b.ID_bill = d.ID_bill
@@ -112,7 +112,7 @@
                                 <td>{$row['ID_bill']}</td>
                                 <td><strong>$vi_tri</strong></td>
                                 <td>{$row['name_KH']}</td>
-                                <td>{$row['phone_number']}</td>
+                                <td>{$row['phonenumber']}</td>
                                 <td style='text-align: left; padding: 10px;'>{$row['list_mon']}</td>
                                 <td><a href='xu_ly_vien.php?action=done&id={$row['ID_bill']}'>Hoàn thành</a></td>
                             </tr>";

@@ -31,7 +31,7 @@ $stmt_bill->bind_param("sdss", $id_bill, $tong_tien, $id_tb, $id_nv);
 $stmt_bill->execute();
 
 // 4. LƯU CHI TIẾT VÀO BẢNG DETAILS_ORDER
-$sql_detail = "INSERT INTO details_order (food_name, id_food, qty, price, ID_bill, name_KH, phone_number, ID_TB, item_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
+$sql_detail = "INSERT INTO details_order (food_name, id_food, qty, price, ID_bill, name_KH, phonenumber, ID_TB, item_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
 $stmt_detail = $conn->prepare($sql_detail);
 
 if (!empty($cart)) {
