@@ -23,6 +23,7 @@
         <p class="login-user">ID: <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'Chưa có thông tin'; ?></strong></p></p>
         <ul class="menu">
             <li class="active" onclick="showPage('schedule')">📅 Thêm lịch</li>
+            <li onclick="showPage('schedule_Staff')">📅 Quản Lý Lịch Làm Việc</li>
             <li onclick="showPage('salary')">💰 Thanh toán lương</li>
             <li onclick="showPage('inventory')">📦 Kiểm kho</li>
             <li onclick="showPage('import')">📥 Thêm kho</li>
@@ -77,6 +78,38 @@
 
                     </form>
                     </div>
+
+            </div>
+        </section>
+        <section id="schedule_Staff" class="page">
+            <div class="box">
+                <h1>Xem Lịch Nhân Viên</h1>
+                <table border="1" width="100%" style="border-collapse: collapse; text-align: center;">
+                    <tr style="background-color: #f2f2f2;">
+                        <th>Mã Ca Làm</th>
+                        <th>ID Nhân Viên</th> 
+                        <th>Tên Nhân Viên</th>
+                        <th>Ngày Làm Việc</th>
+                        <th>Ca Làm Việc</th>
+                        <th>Trạng Thái Ca Làm</th>
+                    </tr>
+                    <?php
+                    
+                    $sql = "SELECT * FROM SHIFT WHERE ID LIKE 'NV%'";
+
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>{$row['ID_shift']}</td>
+                                <td>{$row['ID']}</td>
+                                <td>{$row['Name']}</td>
+                                <td>{$row['Working_date']}</td>
+                                <td>{$row['shift']}</td>
+                                <td>{$row['Shift_status']}</td>
+                            </tr>";
+                    }
+                    ?>
+                </table>
 
             </div>
         </section>

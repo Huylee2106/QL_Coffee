@@ -54,6 +54,8 @@
                         <th>Tên Nhân Viên</th>
                         <th>Ngày Làm Việc</th>
                         <th>Ca Làm Việc</th>
+                        <th>Trạng Thái</th>
+                        <th>Điểm Danh</th>
                     </tr>
                     <?php
                     $ID_NV = $_SESSION['id'];
@@ -67,6 +69,13 @@
                                 <td>{$row['Name']}</td>
                                 <td>{$row['Working_date']}</td>
                                 <td>{$row['shift']}</td>
+                                <td>{$row['Shift_status']}</td>
+                                <td>
+                                    <form action='../config/gui_diemdanh.php' method='POST'>
+                                        <input type='hidden' name='ID_shift' value='{$row['ID_shift']}'>
+                                        <button type='submit'>Vào ca</button>
+                                    </form>
+                                </td>
                             </tr>";
                     }
                     ?>
@@ -140,7 +149,32 @@
         <!-- XEM KHO -->
         <section id="view-inventory" class="page">
             <h1>Xem kho</h1>
-            <div class="box">Tình trạng kho</div>
+            <div class="box">
+                <table border="1" style="width:100%; border-collapse: collapse; text-align: center;">
+                    <thead>
+                        <tr style="background: #070101ff;">
+                            <th>Mã NL</th>
+                            <th>Tên Nguyên Liệu</th>
+                            <th>Số Lượng Tồn</th>
+                            <th>Đơn Vị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql_inv = "SELECT * FROM warehouse";
+                        $res_inv = mysqli_query($conn, $sql_inv);
+                        while($row = mysqli_fetch_assoc($res_inv)) {
+                            echo "<tr>
+                                    <td>{$row['ID_MT']}</td>
+                                    <td>{$row['Name_MT']}</td>
+                                    <td>{$row['Quantity']}</td>
+                                    <td>{$row['Unit']}</td>
+                                </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <!-- THÊM MÓN -->
