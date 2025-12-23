@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_stmt_execute($stmt)) {
         echo '<script>
-            alert("Đã thêm lịch thành công cho nhân viên\nID: '.$id.'\nChức vụ: '.$shift.'\n ngày làm '.$date.'");
+            alert("Đã thêm lịch thành công cho nhân viên\nID: '.$id.'\nCa Làm: '.$shift.'\n ngày làm '.$date.'");
             window.location.href="../page_staff_manager/page_manager.php";
         </script>';
     } else {
