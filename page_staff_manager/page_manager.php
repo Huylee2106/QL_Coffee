@@ -24,6 +24,7 @@
         <ul class="menu">
             <li class="active" onclick="showPage('schedule')">📅 Thêm lịch</li>
             <li onclick="showPage('schedule_Staff')">📅 Quản Lý Lịch Làm Việc</li>
+            <li onclick="showPage('check_shchedule')">📅 Xác Nhận Ca</li>
             <li onclick="showPage('salary')">💰 Thanh toán lương</li>
             <li onclick="showPage('inventory')">📦 Kiểm kho</li>
             <li onclick="showPage('import')">📥 Thêm kho</li>
@@ -106,6 +107,48 @@
                                 <td>{$row['Working_date']}</td>
                                 <td>{$row['shift']}</td>
                                 <td>{$row['Shift_status']}</td>
+                            </tr>";
+                    }
+                    ?>
+                </table>
+
+            </div>
+        </section>
+        <section id="check_shchedule" class="page">
+            <div class="box">
+                <h1>Xác Nhận Ca</h1>
+                <table border="1" width="100%" style="border-collapse: collapse; text-align: center;">
+                    <tr style="background-color: #f2f2f2;">
+                        <th>Mã Ca Làm</th>
+                        <th>ID Nhân Viên</th> 
+                        <th>Tên Nhân Viên</th>
+                        <th>Ngày Làm</th>
+                        <th>Ca Làm</th>
+                        <th>Trạng Thái Ca</th>
+                        <th>Xác Nhận Vào Ca</th>
+                    </tr>
+                    <?php
+                    
+                    $sql = "SELECT sr.ID_shift , s.ID, s.Name, s.Working_date, s.shift, s.Shift_status, sr.request_time
+                    FROM SHIFT_REQUEST sr , SHIFT s
+                    WHERE s.Shift_status!='Đã Vào Làm' AND s.ID = sr.ID AND sr.ID_shift = s.ID_shift AND s.ID LIKE 'NV%'" ;
+
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>{$row['ID_shift']}</td>
+                                <td>{$row['ID']}</td>
+                                <td>{$row['Name']}</td>
+                                <td>{$row['Working_date']}</td>
+                                <td>{$row['shift']}</td>
+                                <td>{$row['Shift_status']}</td>
+                                <td>
+                                    <form action='../config/xac_nhan_DD.php' method='POST'>
+                                        <input type='hidden' name='ID_shift' value='{$row['ID_shift']}'>
+                                        <input type='hidden' name='ID' value='{$row['ID']}'>
+                                        <button type='submit'>Xác Nhận Đã Vào Làm</button>
+                                    </form>
+                                </td>
                             </tr>";
                     }
                     ?>

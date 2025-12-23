@@ -36,4 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     mysqli_stmt_close($stmt);
 }
+    header("Location: ../page_staff_manager/page_staff.php");
+    exit;
 ?>
