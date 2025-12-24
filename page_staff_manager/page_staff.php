@@ -89,16 +89,28 @@
             <table border="1" width="100%">
                 <tr>
                     <th>Mã Đơn</th>
+                    <th>Vị trí</th>
+                    <th>Tên Khách</th>
+                    <th>Món đã đặt</th>
                     <th>Tổng tiền</th>
                     <th>Tiếp nhận yêu cầu</th>
                     <th>Hủy yêu cầu</th>
                 </tr>
                 <?php
-                $sql_confirm = "SELECT * FROM bill WHERE bill_status = 0";
+                $sql_confirm = "SELECT b.ID_bill, b.ID_TB, b.Total, d.name_KH, 
+                               GROUP_CONCAT(CONCAT(d.food_name, ' (', d.qty, ')') SEPARATOR '<br>') as list_mon 
+                            FROM bill b
+                            JOIN details_order d ON b.ID_bill = d.ID_bill
+                            WHERE b.bill_status = 0
+                            GROUP BY b.ID_bill
+                            ORDER BY b.Day ASC";
                 $res_confirm = $conn->query($sql_confirm);
                 while($row = $res_confirm->fetch_assoc()) {
                     echo "<tr>
                             <td>{$row['ID_bill']}</td>
+                            <td>{$row['ID_TB']}</td>
+                            <td>{$row['name_KH']}</td>
+                            <td >{$row['list_mon']}</td>
                             <td>".number_format($row['Total'])." VNĐ</td>
                             <td><a href='xu_ly_vien.php?action=confirm&id={$row['ID_bill']}'>Xác nhận đã thu tiền</a></td>
                             <td><a href='xu_ly_vien.php?action=delete&id={$row['ID_bill']}'>Từ chối</a></td>
