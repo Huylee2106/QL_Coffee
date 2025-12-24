@@ -31,11 +31,15 @@
             <li onclick="showPage('StockReceipt')">🧾 Hóa đơn nhập kho</li>
             <li onclick="showPage('add_staff')">➕ Thêm Nhân Viên</li>
             <li onclick="showPage('employee')">👤 Tra cứu nhân viên</li>
-            <li> <a href="../config/logout.php"><button class="logout-btn">Đăng xuất</button></a></li>
-            <li>
-                <a href="../page_staff_manager/change_password.php">
-                <button class="logout-btn" style="background: #ff00aeff; margin-top: 10px;">Đổi mật khẩu</button></a></li>
         </ul>
+        <div class="sidebar-footer">
+        <a href="../page_staff_manager/change_password.php">
+            <button class="change-password-btn">🔑 Đổi mật khẩu</button>
+        </a>
+        <a href="../config/logout.php">
+            <button class="logout-btn">🚪 Đăng xuất</button>
+        </a>
+    </div>
     </aside>
 
     <!-- CONTENT -->
@@ -78,7 +82,7 @@
                          <button type="submit">Xác Nhận</button>
 
                     </form>
-                    </div>
+                </div>
 
             </div>
         </section>

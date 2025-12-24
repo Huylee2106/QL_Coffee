@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tong_tien'])) {
+    // 👉 Xử lý lưu đơn hàng, database ở đây nếu có
+
+    // Gán thông báo thành công
+    $_SESSION['success'] = "Đã gửi yêu cầu thành công! Cảm ơn bạn đã đặt hàng ❤️";
+
+    // Chuyển hướng tránh submit lại form
+    header("Location: index.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -46,7 +61,7 @@
         if ($result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {
             echo "<div class='item' data-loai='" . $row['type'] . "'>";
-            echo "<img src='" . $row['image'] . "' alt='" . $row['food_name'] . "'>";
+            echo "<img src='images/" . $row['image'] . "' alt='" . $row['food_name'] . "'>";
             echo "<h3>" . $row['food_name'] . "</h3>";
             echo "<p id='gia'>Giá: " . number_format($row['price']) . " VND</p>";
             
@@ -55,7 +70,7 @@
                       data-id='" . $row['id_food'] . "' 
                       data-ten='" . htmlspecialchars($row['food_name'], ENT_QUOTES) . "' 
                       data-gia='" . $row['price'] . "' 
-                      data-img='" . $row['image'] . "'>+</button>";
+                      data-img='images/" . $row['image'] . "'>+</button>";
                       
             echo "</div>";
           }
@@ -110,4 +125,11 @@
 
     
 </body>
+<?php
+if (isset($_SESSION['success'])) {
+    echo "<script>alert('{$_SESSION['success']}');</script>";
+    unset($_SESSION['success']); // Xóa sau khi hiện
+}
+?>
+
 </html>
