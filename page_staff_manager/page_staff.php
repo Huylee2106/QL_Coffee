@@ -180,7 +180,61 @@
         <!-- THÊM MÓN -->
         <section id="view-dish" class="page">
             <h1>Thêm món</h1>
-            <div class="box">Thêm món mới</div>
+            <div class="box">
+                <h3>Thêm món mới</h3>
+                    <form action="../config/them_mon.php" method="POST" enctype="multipart/form-data" class="add-food-form">
+                        <div class="input-group">
+                            <label>Mã món:</label>
+                            <input type="text" name="id_food" required placeholder="Ví dụ: CF01">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Tên món:</label>
+                            <input type="text" name="food_name" required placeholder="Ví dụ: Cafe Muối">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Giá bán:</label>
+                            <input type="number" step="0.01" name="price" required placeholder="Ví dụ: 25000">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Loại (Type):</label>
+                            <select name="type">
+                                <option value="Coffee">Coffee</option>
+                                <option value="Trà">Trà</option>
+                                <option value="Trà sữa">Trà sữa</option>
+                                <option value="Nước ngọt">Nước ngọt</option>
+                                <option value="Sinh tố">Sinh tố</option>
+                                <option value="Nước ép">Nước ép</option>
+                                <option value="Khác">Khác</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Hình ảnh:</label>
+                            <input type="file" name="image" accept="image/*" required>
+                        </div>
+
+                        <button type="submit" name="btn_save" class="btn-add">Lưu món</button>
+                    </form>
+
+
+                    <style>
+                        .add-food-form { display: grid; gap: 15px; max-width: 500px; margin: auto; }
+                        .input-group { display: flex; flex-direction: column; text-align: left; }
+                        .input-group label { font-weight: bold; margin-bottom: 5px; color: #555; }
+                        .input-group input, .input-group select { 
+                            padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px;
+                        }
+                        .btn-add { 
+                            background: #2d5a27; color: white; border: none; padding: 12px; 
+                            border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;
+                        }
+                        .btn-add:hover { background: #1e3f1a; }
+                    </style>
+                    
+            </div>
         </section>
 
         <!-- THÊM CÔNG THỨC -->
