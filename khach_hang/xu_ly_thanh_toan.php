@@ -52,9 +52,13 @@ if (!empty($cart)) {
 }
 
 // 5. THÔNG BÁO THÀNH CÔNG
-echo "<h2>Đặt hàng thành công!</h2>";
-echo "<p>Cảm ơn khách hàng: $ten_kh</p>";
-echo "<a href='index.php'>Quay lại trang chủ</a>"; //
+echo "<script>
+    alert('Đặt hàng thành công! Vui lòng chờ nhân viên xác nhận.');
+    window.location.href = 'index.php';
+</script>";
+
+$conn->close();
+exit(); // Đảm bảo không thực thi thêm code phía dưới
 
 // // Chỉ cập nhật trạng thái bàn nếu thực sự là ngồi tại bàn (không phải Mang đi)
 // if ($id_tb != 'Mang đi') {
