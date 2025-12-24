@@ -33,7 +33,7 @@
             <li onclick="showPage('employee')">👤 Tra cứu nhân viên</li>
         </ul>
         <div class="sidebar-footer">
-        <a href="../page_staff_manager/change_password.php">
+        <a href="../page_staff_manager/change_password_manager.php">
             <button class="change-password-btn">🔑 Đổi mật khẩu</button>
         </a>
         <a href="../config/logout.php">
