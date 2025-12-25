@@ -31,6 +31,7 @@
             <li onclick="showPage('StockReceipt')">🧾 Hóa đơn nhập kho</li>
             <li onclick="showPage('add_staff')">➕ Thêm Nhân Viên</li>
             <li onclick="showPage('employee')">👤 Tra cứu nhân viên</li>
+            <li onclick="showPage('revenue')">💰 kiểm tra doanh thu</li> 
         </ul>
         <div class="sidebar-footer">
         <a href="../page_staff_manager/change_password_manager.php">
@@ -298,15 +299,26 @@
         </section>
 
         <section id="inventory" class="page">
-            <h1>Kiểm kho</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1>📦 Quản lý kho nguyên liệu</h1>
+        
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 10px; top: 10px;">🔍</span>
+                    <input type="text" id="inventorySearch" 
+                        placeholder="Tìm tên nguyên liệu..." 
+                        style="padding: 10px 10px 10px 35px; width: 300px; border-radius: 20px; border: 1px solid #ddd; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                </div>
+            </div>
+
             <div class="box">
-                <table border="1" style="width:100%; border-collapse: collapse; text-align: center;">
+                <table id="inventoryTable" border="1" style="width:100%; border-collapse: collapse; text-align: center;">
                     <thead>
-                        <tr style="background: #f4f4f4;">
-                            <th>Mã NL</th>
+                        <tr style="background: #333; color: white;">
+                            <th style="padding: 12px;">Mã NL</th>
                             <th>Tên Nguyên Liệu</th>
                             <th>Số Lượng Tồn</th>
                             <th>Đơn Vị</th>
+                            <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -314,16 +326,24 @@
                         $sql_inv = "SELECT * FROM warehouse";
                         $res_inv = mysqli_query($conn, $sql_inv);
                         while($row = mysqli_fetch_assoc($res_inv)) {
+                            // Thêm một chút màu sắc cảnh báo nếu hết hàng
+                            $status_text = ($row['Quantity'] <= 5) ? "<span style='color:red; font-weight:bold;'>Sắp hết!</span>" : "<span style='color:green;'>Ổn định</span>";
+                    
                             echo "<tr>
-                                    <td>{$row['ID_MT']}</td>
-                                    <td>{$row['Name_MT']}</td>
+                                    <td style='padding: 10px;'>{$row['ID_MT']}</td>
+                                    <td style='font-weight: bold;'>{$row['Name_MT']}</td>
                                     <td>{$row['Quantity']}</td>
                                     <td>{$row['Unit']}</td>
+                                    <td>$status_text</td>
                                 </tr>";
                         }
                         ?>
                     </tbody>
                 </table>
+        
+                <p id="noResult" style="display: none; text-align: center; padding: 20px; color: #888;">
+                    ❌ Không tìm thấy nguyên liệu nào khớp với từ khóa.
+                </p>
             </div>
         </section>
 
@@ -388,25 +408,18 @@
             <h1>Hóa đơn nhập kho</h1>
             <div class="box">
                 <div style="margin-bottom: 20px;">
-                    <form method="GET" action="">
-                        <input type="hidden" name="page" value="StockReceipt"> 
-        
-                        <label>Tên nguyên liệu: </label>
-                        <input type="text" name="search_name" placeholder="Nhập tên cần tìm..." 
-                            value="<?php echo isset($_GET['search_name']) ? htmlspecialchars($_GET['search_name']) : ''; ?>" 
-                            style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                    <label>Tên nguyên liệu: </label>
+                    <input type="text" id="receiptSearchName" placeholder="Gõ tên để lọc nhanh..." 
+                        style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
 
-                        <label style="margin-left: 10px;">Ngày nhập: </label>
-                        <input type="date" name="filter_date" 
-                            value="<?php echo isset($_GET['filter_date']) ? $_GET['filter_date'] : ''; ?>"
-                            style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
-
-                        <button type="submit" style="padding: 6px 15px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px;">Tìm kiếm</button>
-                        <a href="page_manager.php"><button type="button" style="padding: 6px 15px; border-radius: 4px;">Làm mới</button></a>
-                    </form>
+                    <label style="margin-left: 10px;">Ngày nhập: </label>
+                    <input type="date" id="receiptSearchDate"
+                        style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            
+                    <button type="button" onclick="resetReceiptFilter()" style="padding: 6px 15px; border-radius: 4px;">Làm mới</button>
                 </div>
 
-                <table border="1" style="width:100%; border-collapse: collapse; text-align: center;">
+                <table id="stockReceiptTable" border="1" style="width:100%; border-collapse: collapse; text-align: center;">
                     <thead>
                         <tr style="background: #f4f4f4;">
                             <th>Mã NL</th>
@@ -420,45 +433,22 @@
                     </thead>
                     <tbody>
                         <?php
-                        // Khởi tạo mảng điều kiện
-                        $where_clauses = [];
-
-                        // Kiểm tra tìm kiếm theo tên
-                        if (isset($_GET['search_name']) && !empty($_GET['search_name'])) {
-                            $s_name = mysqli_real_escape_string($conn, $_GET['search_name']);
-                            $where_clauses[] = "Name_MT LIKE '%$s_name%'";
-                        }
-
-                        // Kiểm tra lọc theo ngày
-                        if (isset($_GET['filter_date']) && !empty($_GET['filter_date'])) {
-                            $f_date = mysqli_real_escape_string($conn, $_GET['filter_date']);
-                            $where_clauses[] = "Import_date = '$f_date'";
-                        }
-
-                        // Xây dựng câu SQL
-                        $sql_receipt = "SELECT * FROM stock_receipt";
-                        if (count($where_clauses) > 0) {
-                            $sql_receipt .= " WHERE " . implode(" AND ", $where_clauses);
-                        }
-                        $sql_receipt .= " ORDER BY Import_date DESC";
-
+                        // Code PHP hiển thị dữ liệu giữ nguyên như cũ, 
+                        // nhưng bỏ phần WHERE trong PHP đi để JS tự xử lý cho nhanh
+                        $sql_receipt = "SELECT * FROM stock_receipt ORDER BY Import_date DESC";
                         $res_receipt = mysqli_query($conn, $sql_receipt);
-
-                        if (mysqli_num_rows($res_receipt) > 0) {
-                            while($row = mysqli_fetch_assoc($res_receipt)) {
-                                $total = $row['Quantity'] * $row['Price'];
-                                echo "<tr>
-                                        <td>{$row['ID_MT']}</td>
-                                        <td>{$row['Name_MT']}</td>
-                                        <td>" . date('d/m/Y', strtotime($row['Import_date'])) . "</td>
-                                        <td>{$row['Quantity']}</td>
-                                        <td>{$row['Unit']}</td>
-                                        <td>" . number_format($row['Price'], 0, ',', '.') . "</td>
-                                        <td>" . number_format($total, 0, ',', '.') . "</td>
-                                    </tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='7' style='padding: 20px;'>Không tìm thấy hóa đơn nào phù hợp với yêu cầu tìm kiếm.</td></tr>";
+                        while($row = mysqli_fetch_assoc($res_receipt)) {
+                            $total = $row['Quantity'] * $row['Price'];
+                            // Thêm class 'receipt-row' để JS dễ nhận diện
+                            echo "<tr class='receipt-row'>
+                                    <td>{$row['ID_MT']}</td>
+                                    <td class='name-col'>{$row['Name_MT']}</td>
+                                    <td class='date-col'>{$row['Import_date']}</td>
+                                    <td>{$row['Quantity']}</td>
+                                    <td>{$row['Unit']}</td>
+                                    <td>" . number_format($row['Price'], 0, ',', '.') . "</td>
+                                    <td>" . number_format($total, 0, ',', '.') . "</td>
+                                </tr>";
                         }
                         ?>
                     </tbody>
@@ -471,11 +461,100 @@
             <div class="box">Nội dung tra cứu nhân viên</div>
         </section>
 
+        <section id="revenue" class="page">
+            <h1>Báo Cáo & Kiểm Tra Doanh Thu</h1>
+            <div class="box">
+        
+                <?php
+                    $sql_wallet = "SELECT fund FROM wallet LIMIT 1";
+                    $res_wallet = $conn->query($sql_wallet);
+                    $current_fund = ($res_wallet->num_rows > 0) ? $res_wallet->fetch_assoc()['fund'] : 0;
+                ?>
+                <div style="background: linear-gradient(135deg, #2044d5ff, #f8cedc); color: #333; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 10px solid #1d2b64;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3 style="margin: 0;">💰 Số dư ví hiện tại</h3>
+                            <h1 style="margin: 5px 0; color: #000000ff;"><?php echo number_format($current_fund); ?> VNĐ</h1>
+                        </div>
+                        <form action="../config/xu_ly_vi.php" method="POST" style="display: flex; gap: 5px;">
+                            <input type="number" name="amount" placeholder="Số tiền..." required style="width: 120px; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                            <button type="submit" name="action" value="add" style="background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">+ Nạp</button>
+                            <button type="submit" name="action" value="sub" style="background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">- Rút</button>
+                        </form>
+                    </div>
+                </div>
+
+                <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+
+                <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 30px;">
+                    <h3 style="margin-top: 0;">🚀 Chốt báo cáo tháng mới</h3>
+                    <form action="../config/xu_ly_doanh_thu.php" method="POST" style="display: flex; gap: 15px; align-items: center;">
+                        <div>
+                            <label>Chọn tháng cần chốt:</label>
+                            <input type="month" name="month_year" required style="padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                        </div>
+                        <button type="submit" name="btnChot" style="background: #007bff; color: white; border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                            TÍNH TOÁN & CHỐT DOANH THU
+                        </button>
+                    </form>
+                    <p style="color: #666; font-size: 0.9em; margin-top: 10px;">* Hệ thống sẽ tự động tổng hợp: Bill, Lương, và Tiền nhập kho của tháng đã chọn.</p>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3>📊 Lịch sử báo cáo các tháng</h3>
+    
+            <div style="background: #eee; padding: 10px; border-radius: 8px; display: flex; gap: 10px; align-items: center;">
+                <label style="font-size: 0.9em; font-weight: bold;">🔍 Lọc nhanh:</label>
+                <input type="text" id="revenueSearch" placeholder="Nhập tháng hoặc năm (VD: 12/2025)..." 
+                    style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+        </div>
+
+        <table id="revenueTable" border="1" style="width:100%; border-collapse: collapse; text-align: center; background: white;">
+            <thead>
+                <tr style="background: #f8f9fa;">
+                    <th style="padding: 12px;">Tháng</th>
+                    <th>Doanh thu bán hàng (+)</th>
+                    <th>Tiền lương (-)</th>
+                    <th>Tiền nhập kho (-)</th>
+                    <th>Lợi nhuận</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql_history = "SELECT * FROM revenue ORDER BY Report_month DESC";
+                $res_history = $conn->query($sql_history);
+                while ($row = $res_history->fetch_assoc()) {
+                    $m = date('m/Y', strtotime($row['Report_month']));
+                    $profit = $row['Monthly_profit'];
+                    $color = ($profit >= 0) ? "green" : "red";
+                    echo "<tr>
+                            <td style='padding: 12px; font-weight: bold;'>$m</td>
+                            <td style='color: blue;'>" . number_format($row['Total_monthly_revenue']) . "đ</td>
+                            <td style='color: #d9534f;'>" . number_format($row['Total_shift_cost']) . "đ</td>
+                            <td style='color: #d9534f;'>" . number_format($row['Total_monthly_cost']) . "đ</td>
+                            <td style='font-weight: bold; color: $color;'>" . number_format($profit) . "đ</td>
+                            <td>
+                                <form action='../config/xu_ly_doanh_thu.php' method='POST'>
+                                    <input type='hidden' name='month_year' value='".date('Y-m', strtotime($row['Report_month']))."'>
+                                    <button type='submit' style='background: none; border: 1px solid #007bff; color: #007bff; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8em;'>Cập nhật lại</button>
+                                </form>
+                            </td>
+                        </tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+            </div>
+        </section>
+
     </main>
 
 </div>
 <script src="../page_staff_manager/lay_ten_nv.js"></script>
 <script src="../page_staff_manager/page_manager.js"></script>
 <script src="../page_staff_manager/mau_nhap_kho.js"></script>
+<script src="../page_staff_manager/tim_kiem_thang_nam.js"></script>
 </body>
 </html>
