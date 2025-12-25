@@ -7,8 +7,7 @@ if (isset($_POST['btn_save'])) {
     $price = (float)$_POST['price'];
     $type = $_POST['type'];
 
-    // Xử lý ảnh
-    // ... phía trên giữ nguyên ...
+ 
 
 // Xử lý ảnh
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
@@ -23,7 +22,7 @@ if (isset($_POST['btn_save'])) {
         $target_file = $upload_dir . $file_name;
 
         if (move_uploaded_file($file_tmp, $target_file)) {
-            $sql = "INSERT INTO menu (id_food, food_name, price, image, type)
+            $sql = "INSERT INTO menu (id_food, food_name, price, `image`, `type`)
                     VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssdss", $id_food, $food_name, $price, $file_name, $type);

@@ -57,6 +57,6 @@ if (isset($_POST['btnNhapKho'])) {
         echo "Lỗi lưu lịch sử: " . mysqli_error($conn);
     }
 }
-    header("Location: ../page_staff_manager/page_staff.php");
+    header("Location: ../page_staff_manager/page_manager.php");
     exit;
 ?>

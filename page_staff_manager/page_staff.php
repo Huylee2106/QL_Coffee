@@ -197,7 +197,7 @@
                     <form action="../config/them_mon.php" method="POST" enctype="multipart/form-data" class="add-food-form">
                         <div class="input-group">
                             <label>Mã món:</label>
-                            <input type="text" name="id_food" required placeholder="Ví dụ: CF01">
+                            <input type="text" name="id_food" required placeholder="Ví dụ: CF_01">
                         </div>
                         
                         <div class="input-group">

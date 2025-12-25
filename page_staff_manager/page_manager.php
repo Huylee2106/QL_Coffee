@@ -214,7 +214,87 @@
 
         <section id="salary" class="page">
             <h1>Thanh toán lương</h1>
-            <div class="box">Nội dung thanh toán lương</div>
+            <div class="box">
+                <table border="1" width="100%" style="border-collapse: collapse; text-align: center;">
+                <tr style="background-color: #f2f2f2;">
+                    <th>ID Nhân Viên</th> 
+                    <th>Tên Nhân Viên</th>
+                    <th>Tổng Số Ca Làm</th>
+                    <th>Lương/ca</th>
+                    <th>Tổng Lương</th>
+                    <th>Tháng</th>
+                    <th>Năm</th>
+                    <th>Trạng Thái Lương</th>
+                    <th>Ngày Trả Lương</th>
+                    <th>Xác Nhận Trả Lương</th>
+                </tr>
+
+                <?php
+                $sql = "
+                INSERT INTO salary (ID, Salary_month, `Year`, Salary, Total_shift, Total_salary)
+                SELECT
+                    ID,
+                    MONTH(Working_date),
+                    YEAR(Working_date),
+                    100000,
+                    COUNT(*),
+                    COUNT(*) * 100000
+                FROM shift
+                WHERE Shift_status = 'Đã Vào Làm'
+                GROUP BY ID, MONTH(Working_date), YEAR(Working_date)
+                ON DUPLICATE KEY UPDATE
+                    Total_shift = VALUES(Total_shift),
+                    Total_salary = VALUES(Total_salary)
+                ";
+                $conn->query($sql);
+                $sql2 = "
+                SELECT
+                    sa.ID,
+                    MIN(s.Name) AS Name,
+                    sa.Salary,
+                    sa.Total_shift,
+                    sa.Total_salary,
+                    sa.Salary_month,
+                    sa.Year,
+                    sa.Salary_status,
+                    sa.Payment_date
+                FROM salary sa
+                JOIN shift s ON sa.ID = s.ID
+                GROUP BY
+                    sa.ID,
+                    sa.Salary_month,
+                    sa.Year,
+                    sa.Total_shift,
+                    sa.Salary_status,
+                    sa.Payment_date
+                ";
+                $result = $conn->query($sql2);
+
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>{$row['ID']}</td>
+                            <td>{$row['Name']}</td>
+                            <td>{$row['Total_shift']}</td>
+                            <td>{$row['Salary']}</td>
+                            <td>{$row['Total_salary']}</td>
+                            <td>{$row['Salary_month']}</td>
+                            <td>{$row['Year']}</td>
+                            <td>{$row['Salary_status']}</td>
+                            <td>{$row['Payment_date']}</td>
+                            <td>
+                                <form action='../config/tra_luong.php' method='POST'>
+                                    <input type='hidden' name='ID' value='{$row['ID']}'>
+                                    <input type='hidden' name='month' value='{$row['Salary_month']}'>
+                                    <input type='hidden' name='year' value='{$row['Year']}'>
+                                    <button type='submit'>Xác Nhận Đã Trả Lương</button>
+                                </form>
+                            </td>
+                        </tr>";
+                }
+                ?>
+                </table>
+
+            </div>
         </section>
 
         <section id="inventory" class="page">
