@@ -251,8 +251,59 @@
 
         <!-- THÊM CÔNG THỨC -->
         <section id="view-recipe" class="page">
-            <h1>Thêm món</h1>
-            <div class="box">Thêm công thức cho món</div>
+            <h1>Thêm Công Thức</h1>
+            <div class="box">
+                <form action="../config/them_cong_thuc.php" method="POST" class="add-food-form">
+
+                    <label>ID Món</label>
+                    <select name="ID_food" id="ID_Food" required>
+                        <option value="">Chọn ID Món</option>
+                        <?php
+                        $sql = "SELECT id_food FROM menu";
+                        $res = mysqli_query($conn, $sql);
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            echo "<option value='{$row['id_food']}'>{$row['id_food']}</option>";
+                        }
+                        ?>
+                    </select>
+
+                    <label>Tên Món</label>
+                    <input type="text" id="food_name" readonly>
+
+                    <hr>
+                    <div id="materials">
+                        <div class="material-row">
+                            <label>Nguyên Liệu</label>
+                            <select name="ID_MT[]" required>
+                                <option value="">Chọn Nguyên Liệu</option>
+                                <?php
+                                $sql_mt = "SELECT ID_MT, Name_MT FROM warehouse";
+                                $res_mt = mysqli_query($conn, $sql_mt);
+                                while ($mt = mysqli_fetch_assoc($res_mt)) {
+                                    echo "<option value='{$mt['ID_MT']}'>{$mt['Name_MT']}</option>";
+                                }
+                                ?>
+                            </select>
+
+                            <label>Định Lượng</label>
+                            <input type="number" name="quantity[]" step="1" required>
+
+                            <label>Đơn Vị</label>
+                            <select name="unit[]" required>
+                                <option value="gram">Gram</option>
+                                <option value="ml">ML</option>
+                                <option value="lon">Lon</option>
+                                <option value="cai">Cái</option>
+                            </select>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="addMaterial()">➕ Thêm nguyên liệu</button>
+                    <br><br>
+                    <button type="submit">Lưu Công Thức</button>
+                </form>
+            </div>
             
         </section>
         
@@ -294,7 +345,8 @@
     </main>
 
 </div>
-
+<script src="../page_staff_manager/them_nguyen_lieu.js"></script>
+<script src="../page_staff_manager/lay_ten_food.js"></script>
 <script src="../page_staff_manager/page_staff.js"></script>
 </body>
 </html>
