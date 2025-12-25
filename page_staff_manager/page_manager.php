@@ -470,43 +470,42 @@
                     $res_wallet = $conn->query($sql_wallet);
                     $current_fund = ($res_wallet->num_rows > 0) ? $res_wallet->fetch_assoc()['fund'] : 0;
                 ?>
-                <div style="background: linear-gradient(135deg, #2044d5ff, #f8cedc); color: #333; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 10px solid #1d2b64;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="wallet-card">
+                    <div class="wallet-content">
                         <div>
-                            <h3 style="margin: 0;">💰 Số dư ví hiện tại</h3>
-                            <h1 style="margin: 5px 0; color: #000000ff;"><?php echo number_format($current_fund); ?> VNĐ</h1>
+                            <h3>💰 Số dư ví hiện tại</h3>
+                            <h1><?php echo number_format($current_fund); ?> VNĐ</h1>
                         </div>
-                        <form action="../config/xu_ly_vi.php" method="POST" style="display: flex; gap: 5px;">
-                            <input type="number" name="amount" placeholder="Số tiền..." required style="width: 120px; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                            <button type="submit" name="action" value="add" style="background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">+ Nạp</button>
-                            <button type="submit" name="action" value="sub" style="background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">- Rút</button>
+                        <form action="../config/xu_ly_vi.php" method="POST" class="wallet-form">
+                        <input type="number" name="amount" placeholder="Số tiền..." required>
+                        <button type="submit" name="action" value="add" class="btn btn-add">+ Nạp</button>
+                        <button type="submit" name="action" value="sub" class="btn btn-sub">- Rút</button>
                         </form>
                     </div>
                 </div>
 
                 <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
 
-                <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 30px;">
-                    <h3 style="margin-top: 0;">🚀 Chốt báo cáo tháng mới</h3>
+                <div class="report-box">
+                    <h3>🚀 Chốt báo cáo tháng mới</h3>
                     <form action="../config/xu_ly_doanh_thu.php" method="POST" style="display: flex; gap: 15px; align-items: center;">
                         <div>
                             <label>Chọn tháng cần chốt:</label>
-                            <input type="month" name="month_year" required style="padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                            <input type="month" name="month_year" required>
                         </div>
-                        <button type="submit" name="btnChot" style="background: #007bff; color: white; border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                        <button type="submit" name="btnChot" class="calculate-button">
                             TÍNH TOÁN & CHỐT DOANH THU
                         </button>
                     </form>
-                    <p style="color: #666; font-size: 0.9em; margin-top: 10px;">* Hệ thống sẽ tự động tổng hợp: Bill, Lương, và Tiền nhập kho của tháng đã chọn.</p>
+                    <p class="note">* Hệ thống sẽ tự động tổng hợp: Bill, Lương, và Tiền nhập kho của tháng đã chọn.</p>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div class="table-header">
             <h3>📊 Lịch sử báo cáo các tháng</h3>
     
-            <div style="background: #eee; padding: 10px; border-radius: 8px; display: flex; gap: 10px; align-items: center;">
-                <label style="font-size: 0.9em; font-weight: bold;">🔍 Lọc nhanh:</label>
-                <input type="text" id="revenueSearch" placeholder="Nhập tháng hoặc năm (VD: 12/2025)..." 
-                    style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="search-box">
+                <label>🔍 Lọc nhanh:</label>
+                <input type="text" id="revenueSearch" placeholder="Nhập tháng hoặc năm (VD: 12/2025)..." >
             </div>
         </div>
 

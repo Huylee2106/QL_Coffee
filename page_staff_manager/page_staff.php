@@ -193,7 +193,6 @@
         <section id="view-dish" class="page">
             <h1>Thêm món</h1>
             <div class="box">
-                <h3>Thêm món mới</h3>
                     <form action="../config/them_mon.php" method="POST" enctype="multipart/form-data" class="add-food-form">
                         <div class="input-group">
                             <label>Mã món:</label>
@@ -301,7 +300,7 @@
 
                     <button type="button" onclick="addMaterial()">➕ Thêm nguyên liệu</button>
                     <br><br>
-                    <button type="submit">Lưu Công Thức</button>
+                    <button class="save-btn" type="submit">Lưu Công Thức</button>
                 </form>
             </div>
             

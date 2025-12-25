@@ -211,3 +211,148 @@ table tbody tr:hover {
 ::-webkit-scrollbar-track {
     background: #e5e7eb;
 }
+
+/* ===== WALLET ===== */
+.wallet-card {
+    background: linear-gradient(135deg, #2044d5, #f8cedc);
+    border-radius: 14px;
+    padding: 6px;
+    border-left: 10px solid #1d2b64;
+    margin-bottom: 30px;
+}
+
+.wallet-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wallet-card h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.wallet-card h1 {
+    margin: 6px 0 0;
+    color: #000;
+}
+
+.wallet-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.wallet-form input {
+    width: 200px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    height: 44px;
+    min-width: 90px;
+    padding: 0 18px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 30px;
+}
+
+/* NẠP */
+.btn-add {
+    background: #22c55e;
+    color: white;
+}
+
+.btn-add:hover {
+    background: #16a34a;
+}
+
+/* RÚT */
+.btn-sub {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-sub:hover {
+    background: #dc2626;
+}
+
+
+/* ===== REPORT BOX ===== */
+.report-box {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 35px;
+}
+
+.report-form {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    margin-top: 15px;
+}
+
+.report-form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.note {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* ===== TABLE HEADER ===== */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.search-box {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-box input {
+    width: 260px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* ===== TABLE BUTTON ===== */
+.calculate-button {
+    border: 1px solid #0d6efd;
+    background: #0d6efd;
+    color: white;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.calculate-button:hover {
+    opacity: 1;
+}
