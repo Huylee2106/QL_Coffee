@@ -67,9 +67,9 @@ try {
         $stmt_detail->execute();
     }
 
-    // ================================
+
     // 6. TRỪ KHO (THEO UNIT)
-    // ================================
+    
     foreach ($cart as $item) {
 
         $id_food    = $item['id'];
