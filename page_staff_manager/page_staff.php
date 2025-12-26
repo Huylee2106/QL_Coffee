@@ -293,6 +293,7 @@
                                 <option value="ml">ML</option>
                                 <option value="lon">Lon</option>
                                 <option value="cai">Cái</option>
+                                <option value="trai">Trái</option>
                             </select>
                             <hr>
                         </div>
