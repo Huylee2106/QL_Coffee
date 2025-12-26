@@ -1,58 +1,166 @@
 <?php
+// ================================
 // 1. KẾT NỐI DATABASE
+// ================================
 $conn = new mysqli("localhost", "root", "", "ql_caffe");
 if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
 
+$conn->set_charset("utf8");
+
+// ================================
 // 2. LẤY DỮ LIỆU TỪ FORM
-$ten_kh      = $_POST['ten'] ?? 'Khách vãng lai';
-$sdt         = $_POST['sdt'] ?? '';
-$tong_tien   = (float)($_POST['tong_tien'] ?? 0);
-$json_cart   = $_POST['json_cart'] ?? '[]';
-$cart        = json_decode($json_cart, true);
+// ================================
+$ten_kh    = $_POST['ten'] ?? 'Khách vãng lai';
+$sdt       = $_POST['sdt'] ?? '';
+$tong_tien = (float)($_POST['tong_tien'] ?? 0);
+$json_cart = $_POST['json_cart'] ?? '[]';
+$cart      = json_decode($json_cart, true);
 
-// Tạo mã ID
-$id_bill = "B" . date("His"); 
-$id_tb   = $_POST['id_tb'] ?? 'Mang đi';
-$id_nv   = "NV001"; // ID nhân viên mặc định
+$id_tb = $_POST['id_tb'] ?? 'Mang đi';
+$id_nv = "NV001";
 
-// 3. LƯU VÀO BẢNG BILL
-$sql_bill = "INSERT INTO bill (ID_bill, Day, Total, ID_TB, ID, bill_status) VALUES (?, NOW(), ?, ?, ?, 0)";
-$stmt_bill = $conn->prepare($sql_bill);
-if ($stmt_bill) {
+// tạo mã bill
+$id_bill = "B" . date("YmdHis");
+
+// ================================
+// 3. BẮT ĐẦU TRANSACTION
+// ================================
+$conn->begin_transaction();
+
+try {
+
+    // ================================
+    // 4. INSERT BILL
+    // ================================
+    $sql_bill = "
+        INSERT INTO bill (ID_bill, Day, Total, ID_TB, ID, bill_status)
+        VALUES (?, NOW(), ?, ?, ?, 0)
+    ";
+    $stmt_bill = $conn->prepare($sql_bill);
     $stmt_bill->bind_param("sdss", $id_bill, $tong_tien, $id_tb, $id_nv);
     $stmt_bill->execute();
-}
 
-// 4. LƯU CHI TIẾT VÀO BẢNG DETAILS_ORDER
-if (!empty($cart)) {
-    $sql_detail = "INSERT INTO details_order (food_name, id_food, qty, price, ID_bill, name_KH, phonenumber, ID_TB, item_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
+    // ================================
+    // 5. INSERT DETAILS_ORDER
+    // ================================
+    $sql_detail = "
+        INSERT INTO details_order
+        (food_name, id_food, qty, price, ID_bill, name_KH, phonenumber, ID_TB, item_status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
+    ";
     $stmt_detail = $conn->prepare($sql_detail);
-    
+
     foreach ($cart as $item) {
-        $stmt_detail->bind_param("ssisssss", 
-            $item['ten'], 
-            $item['id'], 
-            $item['quantity'], 
-            $item['gia'], 
-            $id_bill, 
-            $ten_kh, 
-            $sdt, 
+        $stmt_detail->bind_param(
+            "ssisssss",
+            $item['ten'],
+            $item['id'],
+            $item['quantity'],
+            $item['gia'],
+            $id_bill,
+            $ten_kh,
+            $sdt,
             $id_tb
         );
         $stmt_detail->execute();
     }
+
+    // ================================
+    // 6. TRỪ KHO (THEO UNIT)
+    // ================================
+    foreach ($cart as $item) {
+
+        $id_food    = $item['id'];
+        $soLuongMon = (int)$item['quantity'];
+
+        $sqlCT = "
+            SELECT 
+                ct.ID_MT,
+                ct.Quantity_MT,
+                ct.Unit,
+                nl.quantity AS tonKho,
+                nl.Name_MT
+            FROM recipe ct
+            JOIN warehouse nl ON ct.ID_MT = nl.ID_MT
+            WHERE ct.id_food = ?
+        ";
+        $stmtCT = $conn->prepare($sqlCT);
+        $stmtCT->bind_param("s", $id_food);
+        $stmtCT->execute();
+        $dsCT = $stmtCT->get_result();
+
+        while ($r = $dsCT->fetch_assoc()) {
+
+            $unit = strtolower(trim($r['Unit']));
+            $truKho = 0;
+
+            switch ($unit) {
+
+                // ---- CÂN / ĐO ----
+                case 'gram':
+                    $truKho = ($r['Quantity_MT'] * $soLuongMon) / 1000;
+                    break;
+
+                case 'ml':
+                    $truKho = ($r['Quantity_MT'] * $soLuongMon) / 1000;
+                    break;
+
+                // ---- ĐẾM SỐ ----
+                case 'lon':
+                case 'ion':   // fix lỗi gõ
+                case 'cai':
+                case 'trai':
+                    $truKho = $r['Quantity_MT'] * $soLuongMon;
+                    break;
+
+                default:
+                    throw new Exception("Đơn vị không hỗ trợ: " . $unit);
+            }
+
+            // kiểm tra tồn kho
+            if ($r['tonKho'] < $truKho) {
+                throw new Exception("Không đủ nguyên liệu: " . $r['Name_MT']);
+            }
+
+            // trừ kho
+            $sqlUpdate = "
+                UPDATE warehouse
+                SET Quantity = Quantity - ?
+                WHERE ID_MT = ?
+            ";
+            $stmtUpdate = $conn->prepare($sqlUpdate);
+            $stmtUpdate->bind_param("ds", $truKho, $r['ID_MT']);
+            $stmtUpdate->execute();
+        }
+    }
+
+    // ================================
+    // 7. CẬP NHẬT TRẠNG THÁI BÀN
+    // ================================
+    if ($id_tb !== 'Mang đi') {
+        $sqlTable = "UPDATE tables SET Status = 'Có khách' WHERE ID_TB = ?";
+        $stmtTable = $conn->prepare($sqlTable);
+        $stmtTable->bind_param("s", $id_tb);
+        $stmtTable->execute();
+    }
+
+    // ================================
+    // 8. COMMIT
+    // ================================
+    $conn->commit();
+
+} catch (Exception $e) {
+
+    // rollback nếu có lỗi
+    $conn->rollback();
+    die("❌ Thanh toán thất bại: " . $e->getMessage());
 }
 
-// 5. CẬP NHẬT TRẠNG THÁI BÀN (Nếu cần)
-if ($id_tb != 'Mang đi') {
-    $conn->query("UPDATE tables SET Status = 'Có khách' WHERE ID_TB = '$id_tb'");
-}
-
-// Đóng kết nối trước khi xuất HTML
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">
