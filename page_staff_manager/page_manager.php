@@ -10,6 +10,7 @@
     <title>Trang Quản Lý</title>
     <link rel="stylesheet" href="../page_staff_manager/page_manager.css">
     <link rel="stylesheet" href="../page_staff_manager/them_nv.css">
+    <link rel="stylesheet" href="../page_staff_manager/tra_cuu_nv.css">
 
 </head>
 <body>
@@ -456,9 +457,67 @@
             </div>
         </section>
 
+        <!-- TRA CỨU NHÂN VIÊN -->
         <section id="employee" class="page">
             <h1>Tra cứu nhân viên</h1>
-            <div class="box">Nội dung tra cứu nhân viên</div>
+            <div class="box">
+                <form method="GET" class="search-form">
+                    <div class="search-box">
+                        <input type="text" name="keyword" placeholder="Nhập ID hoặc tên nhân viên..."
+                            value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
+                        <button type="submit">
+                            <i class="fas fa-search"></i> 🔍
+                        </button>
+                    </div>
+                    <a href="?" class="btn-all">Tất cả</a>
+                </form>
+
+                <?php
+                    $keyword = "";
+                    $sql = "SELECT ID, name, email, Sex, Date_of_birth, Phone_number, Position, Address FROM user";
+
+                    if (isset($_GET['keyword']) && $_GET['keyword'] != "") {
+                        $keyword = $conn->real_escape_string($_GET['keyword']);
+                        $sql .= " WHERE ID LIKE '%$keyword%' OR name LIKE '%$keyword%'";
+                    }
+
+                    $result = $conn->query($sql);
+
+                    if ($result && $result->num_rows > 0) {
+                        echo "<table class='employee-table'>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên Nhân Viên</th>
+                                        <th>Email</th>
+                                        <th>Giới Tính</th>
+                                        <th>Ngày Sinh</th>
+                                        <th>Điện Thoại</th>
+                                        <th>Chức Vụ</th>
+                                        <th>Địa Chỉ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+
+                        while ($row = $result->fetch_assoc()) {
+                            $birthdate = ($row['Date_of_birth'] != '0000-00-00') ? date('d/m/Y', strtotime($row['Date_of_birth'])) : "N/A";
+                            echo "<tr>
+                                    <td><strong>{$row['ID']}</strong></td>
+                                    <td>{$row['name']}</td>
+                                    <td>{$row['email']}</td>
+                                    <td>{$row['Sex']}</td>
+                                    <td>{$birthdate}</td>
+                                    <td>{$row['Phone_number']}</td>
+                                    <td><span class='position-badge'>{$row['Position']}</span></td>
+                                    <td>{$row['Address']}</td>
+                                </tr>";
+                        }
+                        echo "</tbody></table>";
+                    } else {
+                        echo "<div style='padding: 20px; color: #721c24; background: #f8d7da; border-radius: 8px;'>❌ Không tìm thấy nhân viên phù hợp.</div>";
+                    }
+                ?>
+            </div>
         </section>
 
         <section id="revenue" class="page">
@@ -548,6 +607,8 @@
             </div>
         </section>
 
+        
+        
     </main>
 
 </div>

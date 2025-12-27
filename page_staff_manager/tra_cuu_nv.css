@@ -1,0 +1,193 @@
+/* ===== Base ===== */
+#employee.page{
+  min-height: 100vh;
+  padding: 48px 16px;
+  background: radial-gradient(circle at top, #f5f7fb 0%, #eef2f7 45%, #e9eff6 100%);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:#1f2937;
+}
+
+#employee.page h1{
+  text-align:center;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  margin: 0 0 28px;
+  color:#263241;
+}
+
+/* ===== Card/Box ===== */
+#employee .box{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 22px 22px 28px;
+  background: transparent; /* ảnh nhìn như nền chung, không cần card trắng đậm */
+}
+
+/* ===== Search form layout ===== */
+#employee .search-form{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  justify-content:center;
+  margin-bottom: 18px;
+}
+
+/* pill container */
+#employee .search-box{
+  position: relative;
+  width: min(720px, 100%);
+  height: 64px;
+  border-radius: 999px;
+  padding: 6px; /* tạo viền dày */
+  background: linear-gradient(180deg, #1f4f72 0%, #183f5c 100%);
+  box-shadow: 0 14px 30px rgba(20, 40, 70, .16);
+}
+
+/* input */
+#employee .search-box input{
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 0 92px 0 28px; /* chừa chỗ cho nút search bên phải */
+  font-size: 18px;
+  color:#223041;
+  background: #ffffff;
+}
+
+#employee .search-box input::placeholder{
+  color:#9aa6b2;
+}
+
+/* search button: tròn xanh bên phải */
+#employee .search-box button{
+  position:absolute;
+  top: 2%;
+  right: 5px;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 54px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: radial-gradient(circle at 30% 30%, #62d7c1 0%, #2f9f93 55%, #1b6c71 100%);
+  box-shadow: 0 10px 18px rgba(27, 108, 113, .25);
+  transition: transform .15s ease, filter .15s ease;
+}
+
+/* nếu bạn đang có chữ "🔍" trong button, cho nó gọn */
+#employee .search-box button i,
+#employee .search-box button{
+  font-size: 18px;
+  color: #ffffff;
+
+}
+#employee .search-box button:active{ transform: translateY(-50%) scale(.98); }
+#employee .search-box button:hover{ filter: brightness(1.05); }
+
+/* nút Tất cả */
+#employee .btn-all{
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  font-weight: 700;
+  color:#1f4f72;
+  background:#ffffff;
+  border: 1px solid rgba(31,79,114,.18);
+  box-shadow: 0 8px 18px rgba(20, 40, 70, .08);
+  transition: transform .15s ease, background .15s ease;
+}
+#employee .btn-all:hover{
+  transform: translateY(-1px);
+  background:#f7fbff;
+}
+
+/* Link "Tất cả" phía dưới như ảnh (nếu bạn có text riêng) */
+#employee .box > a,
+#employee .box .all-link{
+  display:block;
+  width: fit-content;
+  margin: 8px auto 14px;
+  color:#57708a;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* ===== Table ===== */
+#employee .employee-table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  background:#fff;
+  box-shadow: 0 14px 30px rgba(20, 40, 70, .12);
+}
+
+#employee .employee-table thead th{
+  background: linear-gradient(180deg, #2b9a8f 0%, #218579 100%);
+  color:#ffffff;
+  padding: 14px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: .2px;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+  white-space: nowrap;
+}
+
+#employee .employee-table tbody td{
+  padding: 12px 14px;
+  font-size: 14.5px;
+  border-bottom: 1px solid #eef2f7;
+  color:#2b3645;
+}
+
+#employee .employee-table tbody tr:nth-child(even){
+  background: #f7fafc; /* zebra */
+}
+
+#employee .employee-table tbody tr:hover{
+  background:#eef8f7;
+}
+
+/* bo góc header */
+#employee .employee-table thead th:first-child{ border-top-left-radius: 14px; }
+#employee .employee-table thead th:last-child{ border-top-right-radius: 14px; }
+#employee .employee-table tbody tr:last-child td:first-child{ border-bottom-left-radius: 14px; }
+#employee .employee-table tbody tr:last-child td:last-child{ border-bottom-right-radius: 14px; }
+
+#employee .employee-table td strong{
+  font-weight: 900;
+  color:#1f4f72;
+}
+
+/* Badge chức vụ */
+#employee .position-badge{
+  display:inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12.5px;
+  color:#0f3d3f;
+  background: rgba(98, 215, 193, .25);
+  border: 1px solid rgba(47, 159, 147, .25);
+}
+
+/* Responsive */
+@media (max-width: 768px){
+  #employee.page h1{ font-size: 28px; }
+  #employee .search-form{ flex-direction: column; }
+  #employee .search-box{ height: 58px; }
+  #employee .search-box input{ font-size: 16px; padding-left: 20px; }
+  #employee .employee-table{ display:block; overflow-x:auto; }
+}
