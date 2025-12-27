@@ -28,6 +28,7 @@ $id_bill = "B" . date("YmdHis");
 // 3. BẮT ĐẦU TRANSACTION
 // ================================
 $conn->begin_transaction();
+$error = null;
 
 try {
 
@@ -155,11 +156,89 @@ try {
 
     // rollback nếu có lỗi
     $conn->rollback();
-    die("❌ Thanh toán thất bại: " . $e->getMessage());
+    $error = $e->getMessage();
 }
 
 $conn->close();
 ?>
+
+<?php if ($error): ?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanh toán thất bại</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f6f7;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .error-container {
+            background: #fff;
+            width: 420px;
+            padding: 30px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: #e74c3c;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        h2 { margin-bottom: 10px; }
+
+        .detail {
+            background: #f9f9f9;
+            border: 1px dashed #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            color: #c0392b;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            background: #2d5a27;
+            color: #fff;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-container">
+    <div class="error-icon">✕</div>
+    <h2>Thanh toán thất bại</h2>
+
+    <div class="detail">
+        <?php echo htmlspecialchars($error); ?>
+    </div>
+
+    <a href="index.php" class="btn">Quay lại đặt món</a>
+</div>
+
+</body>
+</html>
+<?php exit; endif; ?>
 
 
 <!DOCTYPE html>
